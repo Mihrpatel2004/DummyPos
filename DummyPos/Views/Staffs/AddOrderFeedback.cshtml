@@ -1,0 +1,111 @@
+﻿@model DummyPos.Models.ManualFeedbackViewModel
+@{
+    ViewData["Title"] = "Order Feedback";
+    Layout = "_StaffsLayout";
+}
+
+<style>
+    /* Pure CSS Star Rating - No Javascript needed! */
+    .star-rating { 
+        display: flex; 
+        flex-direction: row-reverse; 
+        justify-content: center; 
+        gap: 10px; 
+    }
+    .star-rating input { display: none; }
+    .star-rating label { 
+        font-size: 3.5rem; 
+        color: #e4e5e9; 
+        cursor: pointer; 
+        transition: color 0.2s ease-in-out; 
+    }
+    .star-rating input:checked ~ label, 
+    .star-rating label:hover, 
+    .star-rating label:hover ~ label { 
+        color: #ffc107; /* Bright Yellow */
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            @if (TempData["ErrorMsg"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show shadow-sm">
+                    <i class="fas fa-times-circle me-2"></i> @TempData["ErrorMsg"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card shadow-lg border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-header bg-dark text-white text-center py-4">
+                    <h3 class="mb-0 fw-bold"><i class="fas fa-star text-warning me-2"></i> Customer Feedback</h3>
+                    <p class="mb-0 mt-1 text-light opacity-75">Order #@Model.Order_Id</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5 bg-light">
+                    <form asp-action="AddOrderFeedback" method="post" novalidate>
+                        
+                        <input type="hidden" asp-for="Order_Id" />
+
+                        <div class="mb-4">
+                            <label asp-for="Feedback_Type_Id" class="form-label fw-bold text-secondary mb-2">What is this feedback about?</label>
+                            <select asp-for="Feedback_Type_Id" class="form-select form-select-lg shadow-sm border-0">
+                                @if (ViewBag.FeedbackTypes != null)
+                                {
+                                    foreach (var type in ViewBag.FeedbackTypes)
+                                    {
+                                        <option value="@type.Feedback_Type_Id">@type.Feedback_Type_Name</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="1">General Experience</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-4 text-center bg-white p-4 rounded-3 shadow-sm border-0">
+                            <label class="form-label fw-bold text-secondary d-block mb-3">Rate the Experience</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="Rating" value="5" checked />
+                                <label for="star5" title="5 Stars"><i class="fas fa-star"></i></label>
+                                
+                                <input type="radio" id="star4" name="Rating" value="4" />
+                                <label for="star4" title="4 Stars"><i class="fas fa-star"></i></label>
+                                
+                                <input type="radio" id="star3" name="Rating" value="3" />
+                                <label for="star3" title="3 Stars"><i class="fas fa-star"></i></label>
+                                
+                                <input type="radio" id="star2" name="Rating" value="2" />
+                                <label for="star2" title="2 Stars"><i class="fas fa-star"></i></label>
+                                
+                                <input type="radio" id="star1" name="Rating" value="1" />
+                                <label for="star1" title="1 Star"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Comments" class="form-label fw-bold text-secondary mb-2">Additional Comments (Optional)</label>
+                            <textarea asp-for="Comments" class="form-control shadow-sm border-0" rows="3" placeholder="Did the customer say anything specific?"></textarea>
+                        </div>
+
+                        <div class="d-flex flex-column flex-md-row gap-3">
+                            <a asp-controller="Staffs" asp-action="Receipt" asp-route-orderId="@Model.Order_Id" 
+                               class="btn btn-outline-secondary w-100 py-3 fw-bold fs-5" style="border-radius: 10px;">
+                                Skip & Print <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold fs-5 shadow-sm" style="border-radius: 10px;">
+                                <i class="fas fa-check-circle me-2"></i> Save & Print
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

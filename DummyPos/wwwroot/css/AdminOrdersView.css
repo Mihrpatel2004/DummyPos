@@ -1,0 +1,72 @@
+﻿/* --- Table & Card Styling --- */
+
+.card {
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Make table headers small and muted like the reference image */
+.table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+    border-top: none;
+    color: #6c757d;
+}
+
+/* General table cell padding */
+.table td {
+    padding: 1rem 0.75rem;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* --- Dynamic Status Badges --- */
+
+/* Base badge style */
+.badge {
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+/* Success (Completed) - Light Green */
+.bg-success-light {
+    background-color: #d1e7dd !important;
+    color: #0f5132 !important;
+}
+
+/* Warning (Pending) - Light Yellow/Orange */
+.bg-warning-light {
+    background-color: #fff3cd !important;
+    color: #664d03 !important;
+}
+
+/* Danger (Cancelled) - Light Red */
+.bg-danger-light {
+    background-color: #f8d7da !important;
+    color: #842029 !important;
+}
+
+/* --- Layout Specifics --- */
+
+/* Order ID Link color */
+.text-primary {
+    color: #d62828 !important; /* Making ID red to match the Pizza theme */
+    text-decoration: none;
+}
+
+    .text-primary:hover {
+        text-decoration: underline;
+    }
+
+/* Shadow for the card */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}

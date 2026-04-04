@@ -1,0 +1,99 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Banch Management";
+    Layout = "_AdminLayout";
+}
+
+@model IEnumerable<DummyPos.Models.Branch>
+
+
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Branch Management</h4>
+            <a href="@Url.Action("Create", "Branch")" class="btn btn-light btn-sm">
+                <i class="bi bi-plus-circle"></i> Add New Branch
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped border">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Branch Name</th>
+                        <th class="text-center">Status</th>
+                        <th>Created Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Branch_Id</td>
+                                <td><strong>@item.Branch_Name</strong></td>
+                                <td class="text-center">
+                                    @if (item.Is_Active)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td>@item.Created_Date?.ToString("dd-MMM-yyyy hh:mm tt")</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Branch_Id"
+                                           class="btn btn-outline-primary btn-sm">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Branch_Id"
+                                           class="btn btn-outline-primary btn-sm">Branch Details</a>
+                                        @if (item.Is_Active)
+                                        {
+                                            <a asp-action="DeactivateRole" asp-route-id="@item.Branch_Id"
+                                               class="btn btn-outline-danger btn-sm"
+                                               onclick="return confirm('Are you sure you want to deactivate this role?')">
+                                                <i class="bi bi-slash-circle"></i> Deactivate
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="ActivateRole" asp-route-id="@item.Branch_Id"
+                                               class="btn btn-outline-success btn-sm"
+                                               onclick="return confirm('Are you sure you want to activate this role?')">
+                                                <i class="bi bi-check-circle"></i> Activate
+                                            </a>
+                                        }
+                                   
+                                           <a asp-controller="KitchenStation"
+                                           asp-action="Index"
+                                           asp-route-branchId="@item.Branch_Id"
+                                           class="btn btn-warning">
+
+                                            Kitchen Station
+                                          </a>
+                                        <a asp-controller="Table" asp-action="Index" asp-route-branchId="@item.Branch_Id" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-chair"></i> Manage Tables
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No branches found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿/* Background styling for the whole view */
+.pizza-menu-container {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+/* Pizza Card Styling */
+.pizza-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+    .pizza-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+    }
+
+/* Image Styling */
+.pizza-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Pricing Badge */
+.badge {
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Custom Button */
+.btn-pizza {
+    background-color: #dc3545;
+    color: white;
+    font-weight: 600;
+    border: none;
+    transition: background 0.2s;
+}
+
+    .btn-pizza:hover {
+        background-color: #a71d2a;
+        color: white;
+    }
+
+/* Text Shadow for Main Title */
+h1 {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Add this to your existing Pizza.css */
+.pizza-img {
+    height: 200px;
+    object-fit: cover;
+    filter: brightness(0.95);
+    transition: filter 0.3s ease;
+}
+
+.pizza-card:hover .pizza-img {
+    filter: brightness(1.1); /* Image lights up when you hover the card */
+}

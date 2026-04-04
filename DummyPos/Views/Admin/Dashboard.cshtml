@@ -1,0 +1,436 @@
+﻿@* @model DummyPos.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Command Center";
+    Layout = "_AdminLayout"; 
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    /* 🚨 THE MAGIC BACKGROUND AND GLASS EFFECT 🚨 */
+    .dashboard-wrapper {
+        min-height: calc(100vh - 60px);
+        /* Beautiful dark restaurant background */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 2rem;
+        color: white;
+    }
+
+    /* Frosted Glass Effect for Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        color: white;
+        transition: transform 0.3s ease;
+    }
+    .glass-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    
+    .kpi-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+    .kpi-value { font-size: 2.5rem; font-weight: 800; margin-bottom: 0; }
+    .kpi-icon { font-size: 3rem; opacity: 0.5; position: absolute; right: 20px; top: 20px; }
+</style>
+
+<div class="dashboard-wrapper">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
+        <div>
+            <h2 class="fw-bold mb-0">Overview</h2>
+            <p class="text-light opacity-75 mb-0">Live Business Metrics</p>
+        </div>
+        <form method="get" asp-action="Dashboard" class="d-flex align-items-center">
+            <i class="fas fa-filter me-2 text-warning"></i>
+            <select name="branchId" class="form-select bg-dark text-white border-secondary shadow-sm" onchange="this.form.submit()" style="min-width: 200px;">
+                <option value="">-- All Branches --</option>
+                @foreach (var branch in ViewBag.Branches)
+                {
+                    if (ViewBag.SelectedBranch != null && ViewBag.SelectedBranch == branch.Branch_Id)
+                    {
+                        <option value="@branch.Branch_Id" selected>@branch.Branch_Name</option>
+                    }
+                    else
+                    {
+                        <option value="@branch.Branch_Id">@branch.Branch_Name</option>
+                    }
+                }
+            </select>
+        </form>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card glass-card p-4 position-relative overflow-hidden h-100">
+                <i class="fas fa-wallet text-success kpi-icon"></i>
+                <p class="kpi-title">Today's Revenue</p>
+                <h3 class="kpi-value text-success">₹@Model.TodayRevenue.ToString("0.00")</h3>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3">
+            <div class="card glass-card p-4 position-relative overflow-hidden h-100">
+                <i class="fas fa-shopping-bag text-primary kpi-icon"></i>
+                <p class="kpi-title">Orders Today</p>
+                <h3 class="kpi-value text-primary">@Model.TodayOrders</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card glass-card p-4 position-relative overflow-hidden h-100">
+                <i class="fas fa-star text-warning kpi-icon"></i>
+                <p class="kpi-title">Avg Customer Rating</p>
+                <h3 class="kpi-value text-warning">@Model.AverageRating <span class="fs-5 opacity-75">/ 5.0</span></h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card glass-card p-4 position-relative overflow-hidden h-100">
+                <i class="fas fa-chair text-info kpi-icon"></i>
+                <p class="kpi-title">Active / Open Tables</p>
+                <h3 class="kpi-value text-info">@Model.ActiveTables</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card glass-card p-4 h-100">
+                <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2"><i class="fas fa-fire text-danger me-2"></i> Top Selling Items</h5>
+                <div style="height: 300px;">
+                    <canvas id="topItemsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card glass-card p-4 h-100">
+                <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2"><i class="fas fa-chart-pie text-success me-2"></i> Revenue by Branch</h5>
+                <div style="height: 300px; display: flex; justify-content: center;">
+                    <canvas id="branchPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 1. Data for Top Items (Bar Chart)
+        const itemLabels = @Html.Raw(Json.Serialize(Model.TopSellingItems.Select(x => x.Label)));
+        const itemData = @Html.Raw(Json.Serialize(Model.TopSellingItems.Select(x => x.Value)));
+
+        new Chart(document.getElementById('topItemsChart'), {
+            type: 'bar',
+            data: {
+                labels: itemLabels,
+                datasets: [{
+                    label: 'Quantity Sold',
+                    data: itemData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#ccc' } },
+                    x: { grid: { display: false }, ticks: { color: '#ccc' } }
+                }
+            }
+        });
+
+        // 2. Data for Branch Revenue (Pie Chart)
+        const branchLabels = @Html.Raw(Json.Serialize(Model.SalesByBranch.Select(x => x.Label)));
+        const branchData = @Html.Raw(Json.Serialize(Model.SalesByBranch.Select(x => x.Value)));
+
+        new Chart(document.getElementById('branchPieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: branchLabels,
+                datasets: [{
+                    data: branchData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#fff', padding: 20 } }
+                },
+                cutout: '65%' // Makes it a cool doughnut shape!
+            }
+        });
+    </script>
+} *@
+
+@model DummyPos.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Command Center";
+    Layout = "_AdminLayout";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    :root {
+    --primary: #0061ff;
+    --accent: #60a5fa;
+    --glass: rgba(255, 255, 255, 0.85);
+    --text: #0f172a;
+    --muted: #64748b;
+    }
+
+    .dashboard-wrapper {
+    min-height: 100vh;
+    /* 🚨 LIGHT BACKGROUND IMAGE WITH WHITE OVERLAY 🚨 */
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.93)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
+    padding: 3rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* --- CLEAN HEADER & CLEAR BUTTONS --- */
+    .header-title {
+    font-weight: 900;
+    font-size: 2.6rem;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin: 0;
+    }
+
+    .clear-select {
+    border: none !important;
+    background: white !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 14px !important;
+    padding: 12px 25px !important;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.3s;
+    }
+
+    .clear-select:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 97, 255, 0.1) !important;
+    }
+
+    /* --- FLOATING KPI CARDS --- */
+    .floating-card {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .floating-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 60, 255, 0.08);
+    background: #ffffff;
+    }
+
+    .kpi-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    }
+
+    .kpi-val {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: -1.5px;
+    }
+
+    /* Vibrant Colored Dots */
+    .indicator-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    }
+
+    /* --- CHART PANELS --- */
+    .chart-panel {
+    background: #ffffff;
+    border-radius: 32px;
+    padding: 2rem;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .panel-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    }
+</style>
+
+<div class="dashboard-wrapper">
+    
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="header-title">Information Center</h1>
+            <p class="text-muted fw-700 m-0"><span class="indicator-dot bg-success"></span>Live Performance Data</p>
+        </div>
+        
+        <form method="get" asp-action="Dashboard">
+            <select name="branchId" class="form-select clear-select" onchange="this.form.submit()">
+                <option value="">Global Network</option>
+                @foreach (var branch in ViewBag.Branches)
+                {
+                    <option value="@branch.Branch_Id" selected="@(ViewBag.SelectedBranch == branch.Branch_Id ? "selected" : null)">
+                        @branch.Branch_Name
+                    </option>
+                }
+            </select>
+        </form>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-xl-3">
+            <div class="card floating-card h-100">
+                <p class="kpi-label"><i class="fas fa-wallet text-success mr-2"></i> Revenue</p>
+                <h2 class="kpi-val">₹@Model.TodayRevenue.ToString("N0")</h2>
+                <div class="progress mt-3" style="height: 6px; border-radius: 10px; background: #f1f5f9;">
+                    <div class="progress-bar bg-success" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3">
+            <div class="card floating-card h-100">
+                <p class="kpi-label"><i class="fas fa-shopping-basket text-primary mr-2"></i> Orders</p>
+                <h2 class="kpi-val">@Model.TodayOrders</h2>
+                <small class="text-primary fw-bold mt-2 d-block">Processed Today</small>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card floating-card h-100">
+                <p class="kpi-label"><i class="fas fa-star text-warning mr-2"></i> Rating</p>
+                <h2 class="kpi-val">@Model.AverageRating.ToString("0.0")<span class="fs-4 text-muted">/5</span></h2>
+                <div class="text-warning small mt-2">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card floating-card h-100">
+                <p class="kpi-label"><i class="fas fa-chair text-info mr-2"></i> Tables</p>
+                <h2 class="kpi-val">@Model.ActiveTables</h2>
+                <small class="text-muted fw-bold mt-2 d-block">Active Sessions</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card chart-panel h-100">
+                <div class="panel-title"><i class="fas fa-chart-line text-primary"></i> Demand Analytics</div>
+                <div style="height: 380px;">
+                    <canvas id="topItemsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card chart-panel h-100">
+                <div class="panel-title"><i class="fas fa-chart-pie text-success"></i> Market Share</div>
+                <div style="height: 380px;">
+                    <canvas id="branchPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Set Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+        Chart.defaults.font.weight = '700';
+
+        // 1. REPUTED BAR CHART (Modern Cyan Gradient)
+        const ctxBar = document.getElementById('topItemsChart').getContext('2d');
+        const gradient = ctxBar.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#0061ff');
+        gradient.addColorStop(1, 'rgba(0, 97, 255, 0.05)');
+
+        new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+        labels: @Html.Raw(Json.Serialize(Model.TopSellingItems.Select(x => x.Label))),
+        datasets: [{
+        data: @Html.Raw(Json.Serialize(Model.TopSellingItems.Select(x => x.Value))),
+        backgroundColor: gradient,
+        borderRadius: 15,
+        borderWidth: 0,
+        barThickness: 35
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+        y: { grid: { color: '#f1f5f9' }, border: { display: false }, ticks: { padding: 10 } },
+        x: { grid: { display: false }, border: { display: false }, ticks: { padding: 10 } }
+        }
+        }
+        });
+
+        // 2. REPUTED DOUGHNUT CHART (Thin Stroke)
+        const ctxPie = document.getElementById('branchPieChart').getContext('2d');
+        new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+        labels: @Html.Raw(Json.Serialize(Model.SalesByBranch.Select(x => x.Label))),
+        datasets: [{
+        data: @Html.Raw(Json.Serialize(Model.SalesByBranch.Select(x => x.Value))),
+        backgroundColor: ['#0061ff', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'],
+        hoverOffset: 25,
+        borderWidth: 0
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '82%',
+        plugins: {
+        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 30, font: { size: 12 } } }
+        }
+        }
+        });
+    </script>
+}

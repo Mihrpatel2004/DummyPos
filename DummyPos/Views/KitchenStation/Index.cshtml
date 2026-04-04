@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index KitchenStation";
+    Layout = "_AdminLayout";
+}
+@model IEnumerable<DummyPos.Models.KitchenStation>
+
+<div class="card shadow p-3 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Kitchen Stations for Branch</h3>
+        <div>
+            <a asp-controller="Branch" asp-action="BranchList" class="btn btn-secondary me-2">Back to Branches</a>
+            <a asp-action="Create" asp-route-branchId="@ViewBag.BranchId" class="btn btn-primary">Add New Station</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Station ID</th>
+                <th>Station Name</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Station_Id</td>
+                    <td><strong>@item.Station_Name</strong></td>
+                    <td>
+                        @if (item.Is_Active)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Station_Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                        
+                  
+                            @if (item.Is_Active)
+                            {
+                                <a  asp-action="DeactivateKS" asp-route-id="@item.Station_Id"
+                                   class="btn btn-outline-warning btn-sm"
+                                   onclick="return confirm('Deactivate this item?')">
+                                    <i class="bi bi-slash-circle"></i> Deactivate
+                                </a>
+                            }
+                            else
+                            {
+                                <a  asp-action="ActivateKS" asp-route-id="@item.Station_Id"
+                                   class="btn btn-outline-success btn-sm"
+                                   onclick="return confirm('Activate this item?')">
+                                    <i class="bi bi-check-circle"></i> Activate
+                                </a>
+                            }
+                            <!-- THIS IS THE BUTTON THAT GOES TO THE SCREEN LIST -->
+                            
+                            <a asp-controller="Screen"
+                               asp-action="Index"
+                               asp-route-stationId="@item.Station_Id"
+                               class="btn btn-warning">
+
+                                Screen No
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Station_Id" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this station?')">Delete</a>
+                           
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

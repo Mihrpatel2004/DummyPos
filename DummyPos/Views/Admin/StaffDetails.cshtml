@@ -1,0 +1,54 @@
+﻿@model DummyPos.Models.Staffs
+@{
+    ViewData["Title"] = "Staff Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-address-card me-2"></i> Staff Profile</h4>
+        <span class="badge @(Model.Is_Active ? "bg-success" : "bg-danger") fs-6">
+            @(Model.Is_Active ? "Active Employee" : "Inactive Employee")
+        </span>
+    </div>
+    <div class="card-body p-4">
+        <div class="row mb-4 border-bottom pb-3">
+            <div class="col-md-2 text-center">
+                <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px; font-size: 2rem;">
+                    @Model.Staff_Name.Substring(0, 1).ToUpper()
+                </div>
+            </div>
+            <div class="col-md-10 d-flex align-items-center">
+                <div>
+                    <h2 class="mb-0 text-dark">@Model.Staff_Name</h2>
+                    <p class="text-muted fs-5 mb-0">@@@Model.Username | @Model.Role_Name</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0"><strong>Staff ID:</strong> #@Model.Staff_Id</li>
+                    <li class="list-group-item px-0"><strong>Email:</strong> @Model.Email</li>
+                    <li class="list-group-item px-0"><strong>Phone:</strong> @Model.Phone</li>
+                    <li class="list-group-item px-0"><strong>Assigned Branch:</strong> @Model.Branch_Name</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0"><strong>Hire Date:</strong> @Model.Hire_Date?.ToString("dd MMM yyyy")</li>
+                    <li class="list-group-item px-0"><strong>Salary:</strong> ₹@Model.Salary</li>
+                    <li class="list-group-item px-0 text-primary">
+                        <strong>Last Login:</strong>
+                        @(Model.Last_Login.HasValue? Model.Last_Login.Value.ToString("dd MMM yyyy, hh:mm tt") : "Never Logged In")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-light d-flex justify-content-end gap-2">
+        <a asp-action="EditStaff" asp-route-id="@Model.Staff_Id" class="btn btn-warning px-4"><i class="fas fa-edit me-1"></i> Edit</a>
+        <a asp-action="StaffList" class="btn btn-secondary px-4">Back to List</a>
+    </div>
+</div> 

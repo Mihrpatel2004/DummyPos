@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Staff list";
+}
+@model IEnumerable<DummyPos.Models.Staffs>
+
+
+@* Link to the separate CSS file *@
+<link rel="stylesheet" href="~/css/Staff-ListView.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="content-wrapper-custom py-4">
+    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="display-6 fw-bold text-primary">Staff Directory</h2>
+            <p class="text-muted mb-0">Manage employees across all branches</p>
+        </div>
+        <a asp-action="Create" class="btn btn-add-staff shadow-sm">
+            <i class="fas fa-user-plus me-2"></i>Add New Staff
+        </a>
+    </div>
+
+    <div class="card main-card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Staff Member</th>
+                            <th>Contact Detail</th>
+                            <th>Role</th>
+                            <th>Branch</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle">
+                                            @item.Staff_Name.Substring(0, 1).ToUpper()
+                                        </div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold text-dark">@item.Staff_Name</div>
+                                            <small class="text-muted">ID: #@item.Staff_Id</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="contact-info">
+                                        <div><i class="fas fa-envelope me-2 text-muted"></i>@item.Email</div>
+                                        <div><i class="fas fa-phone me-2 text-muted"></i>@item.Phone</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-role">@item.Role_Name</span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary fw-medium">
+                                        <i class="fas fa-map-marker-alt me-1"></i> @item.Branch_Name
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Is_Active)
+                                    {
+                                        <span class="status-indicator active">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-indicator inactive">Inactive</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group shadow-sm">
+                                        <a asp-action="StaffDetails" asp-route-id="@item.Staff_Id"
+                                           class="btn btn-view" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a asp-action="EditStaff" asp-route-id="@item.Staff_Id"
+                                           class="btn btn-edit" title="Edit Staff Details">
+                                            <i class="fas fa-user-edit"></i>
+                                        </a>
+                                       
+                                        <a asp-action="DeactivateStaff" asp-route-id="@item.Staff_Id"
+                                           class="btn btn-deactivate"
+                                           onclick="return confirm('Are you sure you want to deactivate @item.Staff_Name?')"
+                                           title="Deactivate">
+                                            <i class="fas fa-user-slash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

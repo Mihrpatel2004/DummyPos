@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Admin  Order";
+    Layout = "_AdminLayout";
+}
+@* @model IEnumerable<YourProject.Models.Order>
+ *@
+
+ <link rel="stylesheet" href="~/css/AdminOrdersView.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold text-dark">Order Overview</h6>
+        <a asp-controller="Orders" asp-action="Index" class="btn btn-sm btn-outline-danger">View All</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light text-muted small">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="fw-bold text-primary">#@item.OrderId</span></td>
+                                <td>@item.CustomerName</td>
+                                <td>
+                                    @if (item.Status == "Completed")
+                                    {
+                                        <span class="badge bg-success-light text-success px-3">@item.Status</span>
+                                    }
+                                    else if (item.Status == "Pending")
+                                    {
+                                        <span class="badge bg-warning-light text-warning px-3">@item.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger-light text-danger px-3">@item.Status</span>
+                                    }
+                                </td>
+                                <td>@item.OrderDate.ToString("MMM dd, yyyy")</td>
+                                <td class="fw-bold">$@item.TotalAmount.ToString("F2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No recent orders found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

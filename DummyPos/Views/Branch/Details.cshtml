@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DummyPos.Models.Branch
+
+@{
+    ViewData["Title"] = "Branch Details";
+  
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Branch Information</h5>
+                    <span class="badge @(Model.Is_Active ? "bg-success" : "bg-danger")">
+                        @(Model.Is_Active ? "Active" : "Inactive")
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold text-muted">Branch ID</div>
+                        <div class="col-sm-8">@Model.Branch_Id</div>
+                    </div>
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold text-muted">Branch Name</div>
+                        <div class="col-sm-8 text-primary fw-bold">@Model.Branch_Name</div>
+                    </div>
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold text-muted">Status</div>
+                        <div class="col-sm-8">
+                            @(Model.Is_Active ? "This branch is currently operating." : "This branch is currently closed/inactive.")
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold text-muted">Created Date</div>
+                        <div class="col-sm-8">
+                            @Model.Created_Date?.ToString("f")
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light d-flex justify-content-end">
+                    <a asp-action="Edit" asp-route-id="@Model.Branch_Id" class="btn btn-warning me-2">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <a asp-action="BranchList" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

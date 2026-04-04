@@ -1,0 +1,63 @@
+﻿@model DummyPos.Models.Staffs
+@{
+    ViewData["Title"] = "Edit Staff";
+    Layout = "_AdminLayout";
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-warning text-dark">
+        <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i> Edit Staff: @Model.Staff_Name</h4>
+    </div>
+    <div class="card-body p-4">
+        <form asp-action="EditStaff" method="post">
+            <input type="hidden" asp-for="Staff_Id" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Staff_Name" class="form-label fw-bold"></label>
+                    <input asp-for="Staff_Name" class="form-control" />
+                    <span asp-validation-for="Staff_Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label fw-bold"></label>
+                    <input asp-for="Email" type="email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Role_Id" class="form-label fw-bold">Role</label>
+                    <select asp-for="Role_Id" class="form-select" asp-items="@(new SelectList(ViewBag.Roles, "Role_Id", "Role_Desc"))">
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BranchId" class="form-label fw-bold">Branch</label>
+                    <select asp-for="BranchId" class="form-select" asp-items="@(new SelectList(ViewBag.Branches, "Branch_Id", "Branch_Name"))">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Phone" class="form-label fw-bold"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Salary" class="form-label fw-bold"></label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input asp-for="Salary" type="number" step="0.01" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a asp-action="StaffList" class="btn btn-secondary px-4">Cancel</a>
+                <button type="submit" class="btn btn-primary px-4">Update Details</button>
+            </div>
+        </form>
+    </div>
+</div>

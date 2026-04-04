@@ -1,0 +1,140 @@
+﻿/* General Colors */
+:root {
+    --primary-color: #4e73df;
+    --success-bg: #e1f6eb;
+    --success-text: #1cc88a;
+    --danger-bg: #fee2e2;
+    --danger-text: #e74a3b;
+    --border-color: #eaecf4;
+}
+
+body {
+    background-color: #f8f9fc;
+}
+
+/* Header & Add Button */
+.btn-add-staff {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+    .btn-add-staff:hover {
+        background-color: #2e59d9;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+/* Card Styling */
+.main-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Table Design */
+.table thead th {
+    background-color: #fcfdff;
+    border-bottom: 2px solid var(--border-color);
+    color: #858796;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 1.2rem 1rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s;
+}
+
+    .table tbody tr:hover {
+        background-color: #f4f6ff;
+    }
+
+/* Avatar Circle */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Badges and Indicators */
+.badge-role {
+    background-color: #efeffd;
+    color: var(--primary-color);
+    border: 1px solid #d1d9ff;
+    padding: 0.5rem 0.8rem;
+    font-weight: 500;
+}
+
+.status-indicator {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+    .status-indicator.active {
+        background-color: var(--success-bg);
+        color: var(--success-text);
+    }
+
+    .status-indicator.inactive {
+        background-color: var(--danger-bg);
+        color: var(--danger-text);
+    }
+
+/* Action Buttons Group */
+.btn-group .btn {
+    padding: 8px 15px;
+}
+
+.btn-view {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    color: #4e73df;
+}
+
+    .btn-view:hover {
+        background-color: #4e73df;
+        color: white;
+    }
+
+.btn-deactivate {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    color: #e74a3b;
+}
+
+    .btn-deactivate:hover {
+        background-color: #e74a3b;
+        color: white;
+    }
+
+.contact-info {
+    font-size: 0.85rem;
+    color: #5a5c69;
+}
+
+/* ***** */
+.container-fluid {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 30px; /* Adjust this based on your sidebar width */
+    padding-right: 30px;
+}
+.content-wrapper-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+}

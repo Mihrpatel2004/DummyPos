@@ -1,0 +1,68 @@
+﻿/* General Styling */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Enhancements */
+.navbar {
+    height: 80px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Category Menu Styling */
+.category-menu .nav-link {
+    font-weight: 600;
+    color: #444;
+    transition: all 0.3s ease;
+    text-align: center;
+    border-radius: 8px;
+}
+
+    .category-menu .nav-link:hover {
+        color: #dc3545;
+        background-color: #fff5f5;
+    }
+
+.category-menu i {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+/* User Button Styling */
+.user-btn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 2px solid #ddd;
+}
+
+    .user-btn:hover {
+        background-color: #333;
+        color: white;
+        border-color: #333;
+    }
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    min-width: 200px;
+    border-radius: 12px;
+    margin-top: 15px !important;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1;
+    }
+
+/* Main Content Area */
+main {
+    min-height: 80vh;
+}

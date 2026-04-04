@@ -1,0 +1,110 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Drinks Menu";
+}
+
+<link rel="stylesheet" href="~/css/Drink.css" />
+
+<div class="drink-menu-container">
+    <div class="container py-5">
+        <div class="text-center mb-5 text-white">
+            <h1 class="display-4 fw-bold">Refreshing Drinks</h1>
+            <p class="lead">The perfect companion to your favorite pizza.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Classic Cola">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Classic Cola</h5>
+                        <p class="card-text text-muted small">Ice cold original recipe soda.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 1 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1523473827533-2a64d0d36748?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Fresh Lemonade">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Fresh Lemonade</h5>
+                        <p class="card-text text-muted small">Hand-pressed lemons with a hint of mint.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 2 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1553177595-4de2bb0842b9?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Milkshake">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Creamy Shake</h5>
+                        <p class="card-text text-muted small">Thick strawberry shake with whipped cream.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 3 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Iced Tea">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Peach Ice Tea</h5>
+                        <p class="card-text text-muted small">Brewed black tea with natural peach flavor.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 4 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Orange Juice">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Fresh Orange</h5>
+                        <p class="card-text text-muted small">100% freshly squeezed orange juice.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 5 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card drink-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top drink-img" alt="Water">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Zero Suger Fanta</h5>
+                        <p class="card-text text-muted small">Refreshing bubbly mineral water.</p>
+                        <a href="@Url.Action("Details", "Drinks", new { id = 6 })" class="btn btn-drink w-100 rounded-pill">Add to Order</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

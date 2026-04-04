@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pizza POS - @ViewData["Title"]</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/Layout.css" asp-append-version="true" />
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+            <div class="container-fluid">
+
+                <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Pizza", "Home")">
+                    <i class="bi bi-patch-check-fill text-danger me-2 fs-3"></i>
+                    <span class="fw-bold text-uppercase tracking-tight">Pizza<span class="text-danger">POS</span></span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+         
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 category-menu">
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="@Url.Action("Pizza", "Home")">
+                                <i class="bi bi-egg-fried d-block text-center"></i> Pizza
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="@Url.Action("Drink", "Home")">
+                                <i class="bi bi-cup-straw d-block text-center"></i> Drinks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="@Url.Action("Burger", "Home")">
+                                <i class="bi bi-stack d-block text-center"></i> Burgers
+                            </a>
+                        </li>
+
+                    </ul>
+                    <form class="d-flex mx-lg-3 my-2 my-lg-0" asp-controller="Home" asp-action="Search" method="get">
+                        <div class="input-group input-group-sm shadow-sm" style="border-radius: 50px; overflow: hidden; max-width: 250px;">
+                            <input class="form-control border-0 bg-light px-3 py-2" type="search" name="searchQuery" placeholder="Search menu..." required>
+                            <button class="btn btn-light bg-light border-0 px-3" type="submit">
+                                <i class="bi bi-search text-danger"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark rounded-circle user-btn" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userMenu">
+                            <li><h6 class="dropdown-header">Access Portals</h6></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Dashboard", "Admin")"><i class="bi bi-shield-lock me-2"></i>Login Staffs</a></li> 
+                            @* <li><a class="dropdown-item" href="@Url.Action("Order", "Staffs")"><i class="bi bi-person-badge me-2"></i> Staff Login</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Order", "Staffs")"><i class="bi bi-person-badge me-2"></i> Staff Login</a></li> *@
+                           @*  <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Login", "Customer")"><i class="bi bi-person me-2"></i> Customer Login</a></li>
+                            <li><a class="dropdown-item text-danger" href="@Url.Action("Register", "Customer")">Sign Up</a></li> *@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container-fluid pt-5 mt-5">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

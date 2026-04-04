@@ -1,0 +1,130 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+}
+<link href="/css/AdminDashBoard.css" rel="stylesheet"/>
+<div class="dashboard-content">
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card bg-danger-custom text-white p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-uppercase fw-bold" style="opacity: 0.8;">Today's Orders</small>
+                        <h2 class="mb-0 mt-1">124</h2>
+                    </div>
+                    <i class="fas fa-shopping-basket fa-2x" style="opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card bg-orange-custom text-white p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-uppercase fw-bold" style="opacity: 0.8;">Sales Revenue</small>
+                        <h2 class="mb-0 mt-1">$2,580</h2>
+                    </div>
+                    <i class="fas fa-dollar-sign fa-2x" style="opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card bg-yellow-custom text-white p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-uppercase fw-bold" style="opacity: 0.8;">Pending Orders</small>
+                        <h2 class="mb-0 mt-1">18</h2>
+                    </div>
+                    <i class="fas fa-clock fa-2x" style="opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card bg-green-custom text-white p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-uppercase fw-bold" style="opacity: 0.8;">Total Customers</small>
+                        <h2 class="mb-0 mt-1">1,320</h2>
+                    </div>
+                    <i class="fas fa-users fa-2x" style="opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0 fw-bold text-dark">Order Overview</h6>
+                    <button class="btn btn-sm btn-outline-danger">View All</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light text-muted small uppercase">
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="fw-bold text-primary">#101253</span></td>
+                                    <td>John Doe</td>
+                                    <td><span class="badge bg-success-light text-success px-3">Completed</span></td>
+                                    <td>Oct 12, 2023</td>
+                                    <td class="fw-bold">$18.90</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="fw-bold text-primary">#101254</span></td>
+                                    <td>Sarah Smith</td>
+                                    <td><span class="badge bg-warning-light text-warning px-3">Pending</span></td>
+                                    <td>Oct 12, 2023</td>
+                                    <td class="fw-bold">$24.50</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="fw-bold text-primary">#101255</span></td>
+                                    <td>Mike Johnson</td>
+                                    <td><span class="badge bg-danger-light text-danger px-3">Cancelled</span></td>
+                                    <td>Oct 11, 2023</td>
+                                    <td class="fw-bold">$12.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-header bg-white py-3 text-center">
+                    <h6 class="mb-0 fw-bold">Top Selling Pizza</h6>
+                </div>
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600"
+                     class="card-img-top" alt="Pizza" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">BBQ Chicken Special</h5>
+                    <p class="text-muted small mb-3">Loaded with smoked chicken, red onions, and mozzarella cheese.</p>
+                    <div class="d-flex justify-content-around bg-light p-2 rounded">
+                        <div>
+                            <small class="text-muted d-block">Price</small>
+                            <strong>$14.99</strong>
+                        </div>
+                        <div class="border-start"></div>
+                        <div>
+                            <small class="text-muted d-block">Orders</small>
+                            <strong>450+</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

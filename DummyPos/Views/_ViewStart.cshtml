@@ -1,0 +1,30 @@
+﻿@* @{
+    Layout = "_Layout";
+}
+ *@
+
+@{
+    // Check if the user is successfully logged in
+    if (User.Identity.IsAuthenticated)
+    {
+        // Check the Role that we saved during Login
+        if (User.IsInRole("Admin"))
+        {
+            Layout = "_AdminLayout";
+        }
+        else if (User.IsInRole("Staff"))
+        {
+            Layout = "_StaffLayout";
+        }
+        else
+        {
+            // Customers
+            Layout = "_CustomerLayout";
+        }
+    }
+    else
+    {
+        // Public pages (Login, Register, public home page)
+        Layout = "_Layout";
+    }
+}

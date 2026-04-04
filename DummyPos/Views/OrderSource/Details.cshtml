@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DummyPos.Models.OrderSource
+@{
+    ViewData["Title"] = "Order Source Details";
+}
+
+<div class="container mt-4">
+    <div class="card col-md-6 offset-md-3 shadow border-0">
+        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i> Source Details</h4>
+            <span class="badge @(Model.Is_Active ? "bg-success" : "bg-danger") fs-6">
+                @(Model.Is_Active ? "Active" : "Inactive")
+            </span>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-5 text-muted">Source ID:</dt>
+                <dd class="col-sm-7">@Model.Source_Id</dd>
+
+                <dt class="col-sm-5 text-muted">Description:</dt>
+                <dd class="col-sm-7 text-primary fw-bold fs-5">@Model.Source_Desc</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-end gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Source_Id" class="btn btn-warning px-4">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary px-4">Back to List</a>
+        </div>
+    </div>
+</div>

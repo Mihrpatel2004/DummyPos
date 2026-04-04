@@ -1,0 +1,95 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<DummyPos.Models.Role>
+
+@{
+    ViewData["Title"] = "Role Management";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Role Management</h4>
+            <a asp-action="Create" class="btn btn-light btn-sm">
+                <i class="bi bi-plus-circle"></i> Add New Role
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>@item.Role_Id</strong></td>
+                                    <td>@item.Role_Desc</td>
+                                    <td>
+                                        @if (item.Is_Active)
+                                        {
+                                            <span class="badge rounded-pill bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge rounded-pill bg-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>@item.Created_Date?.ToString("dd-MMM-yyyy")</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Edit" asp-route-id="@item.Role_Id"
+                                               class="btn btn-outline-primary btn-sm">Edit</a>
+                                            @if (item.Is_Active)
+                                            {
+                                                <a asp-action="DeactivateRole" asp-route-id="@item.Role_Id"
+                                                   class="btn btn-outline-danger btn-sm"
+                                                   onclick="return confirm('Are you sure you want to deactivate this role?')">
+                                                    <i class="bi bi-slash-circle"></i> Deactivate
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="ActivateRole" asp-route-id="@item.Role_Id"
+                                                   class="btn btn-outline-success btn-sm"
+                                                   onclick="return confirm('Are you sure you want to activate this role?')">
+                                                    <i class="bi bi-check-circle"></i> Activate
+                                                </a>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    No roles found in the database.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Optional: Add Bootstrap Icons if you haven't already *@
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+}

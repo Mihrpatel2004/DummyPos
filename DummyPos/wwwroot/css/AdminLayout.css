@@ -1,0 +1,116 @@
+﻿/* Layout Positioning */
+#wrapper {
+    overflow-x: hidden;
+    display: flex;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    margin-left: 0;
+    transition: margin 0.25s ease-out;
+    background-color: #2c2c2c;
+}
+
+/* Sidebar Toggle for Mobile */
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}
+
+/* Sidebar Styling */
+#sidebar-wrapper .list-group-item {
+    background-color: transparent;
+    color: #adb5bd;
+    border: none;
+    padding: 1.2rem 1.5rem;
+    transition: 0.3s;
+}
+
+    #sidebar-wrapper .list-group-item:hover {
+        color: #fff;
+        background-color: rgba(255,255,255,0.1);
+    }
+
+    #sidebar-wrapper .list-group-item.active {
+        background-color: #d62828;
+        color: white;
+        border-left: 4px solid #fcbf49;
+    }
+
+/* Theme Colors */
+.navbar-red {
+    background-color: #d62828;
+}
+
+.bg-danger-custom {
+    background-color: #e63946;
+}
+
+.bg-orange-custom {
+    background-color: #f77f00;
+}
+
+.bg-yellow-custom {
+    background-color: #fcbf49;
+}
+
+.bg-green-custom {
+    background-color: #2a9d8f;
+}
+
+/* Dashboard Cards */
+.stat-card {
+    border-radius: 10px;
+    border: none;
+    transition: transform 0.2s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    /**********/
+
+/* Circular Admin Image Styling */
+.admin-profile-img-container img {
+    width: 40px; /* Width of the circle */
+    height: 40px; /* Height must be equal to width */
+    object-fit: cover; /* Important: prevents stretching of the photo */
+    background-color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    .admin-profile-img-container img:hover {
+        transform: scale(1.08); /* Small zoom effect */
+    }
+
+/* Fix for the dropdown arrow color */
+.navbar-red .dropdown-toggle::after {
+    color: white;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* Ensure navbar is the correct red from your image */
+.navbar-red {
+    background-color: #d62828 !important;
+    padding: 0.5rem 1rem;
+}
+
+/* change 1.*/
+#wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#page-content-wrapper {
+    flex: 1; /* This ensures the content takes up all remaining space */
+    min-width: 0;
+    background-color: #f8f9fc;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px; /* Or whatever your sidebar width is */
+    transition: margin .25s ease-out;
+}

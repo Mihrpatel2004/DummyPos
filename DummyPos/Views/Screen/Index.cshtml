@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index Screen";
+    Layout = "_AdminLayout";
+}
+@model IEnumerable<DummyPos.Models.ItemDisplayScreen>
+
+<div class="card shadow p-3 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Screens for Station: <span class="text-primary">@ViewBag.StationName</span></h3>
+        <div>
+            <a asp-controller="KitchenStation" asp-action="Index" asp-route-branchId="@ViewBag.BranchId" class="btn btn-secondary me-2">Back to Stations</a>
+            <a asp-action="Create" asp-route-stationId="@ViewBag.StationId" class="btn btn-primary">Add New Screen</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Screen No</th>
+                <th>Displaying Item</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>Screen #@item.Screen_No</td>
+                    <td><strong>@item.Item_Name</strong></td>
+                    <td>
+                        @if (item.Is_Active)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Screen_No" class="btn btn-outline-primary btn-sm">Edit</a>
+@* 
+                            @if (item.Is_Active)
+                            {
+                                <a asp-action="DeactivateScreen" asp-route-id="@item.Screen_No"
+                                       class="btn btn-outline-warning btn-sm"
+                                       onclick="return confirm('Deactivate this item?')">
+                                    <i class="bi bi-slash-circle"></i> Deactivate
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="ActivateScreen" asp-route-id="@item.Screen_No"
+                                       class="btn btn-outline-success btn-sm"
+                                       onclick="return confirm('Activate this item?')">
+                                    <i class="bi bi-check-circle"></i> Activate
+                                </a>
+                            }
+ *@
+                            <a asp-action="Delete" asp-route-id="@item.Screen_No" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this screen?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

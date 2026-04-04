@@ -1,0 +1,207 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+
+    @model List<DummyPos.Models.Branch>
+@{
+    ViewData["Title"] = "Branch Directory";
+    Layout = "_AdminLayout";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* --- VIBRANT FUTURE-LIGHT BACKGROUND --- */
+    .branch-wrapper {
+        background: radial-gradient(circle at top right, #e0e7ff, #f8fafc 50%),
+                    radial-gradient(circle at bottom left, #f1f5f9, #ffffff 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 40px;
+        margin: -20px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .title-area {
+        margin-bottom: 50px;
+    }
+
+    .gradient-text {
+        background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        font-size: 2.8rem;
+        letter-spacing: -2px;
+    }
+
+    /* --- THE GLASS BRANCH CARD --- */
+    .glass-branch-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 32px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .glass-branch-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(58, 123, 213, 0.15);
+        background: #ffffff;
+        border-color: #3a7bd5;
+    }
+
+    /* Image Container with Zoom */
+    .img-frame {
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .branch-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .glass-branch-card:hover .branch-img {
+        transform: scale(1.1);
+    }
+
+    /* Status Badges */
+    .status-pill {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .bg-active { background: #10b981; color: white; }
+    .bg-closed { background: #ef4444; color: white; }
+
+    /* Card Content */
+    .branch-content {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .branch-name {
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: #1e293b;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+
+    .branch-sub {
+        font-size: 0.85rem;
+        color: #64748b;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    /* Action Button */
+    .btn-view-staff {
+        background: #eff6ff;
+        color: #3a7bd5;
+        padding: 12px;
+        border-radius: 16px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+        display: block;
+        text-decoration: none;
+        border: 1px solid rgba(58, 123, 213, 0.1);
+    }
+
+    .btn-view-staff:hover {
+        background: #3a7bd5;
+        color: white;
+        box-shadow: 0 10px 20px rgba(58, 123, 213, 0.2);
+    }
+
+    /* Animated Dot for Active Branches */
+    .pulse-dot {
+        height: 10px; width: 10px;
+        background-color: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        box-shadow: 0 0 8px #10b981;
+    }
+</style>
+
+<div class="branch-wrapper">
+    <div class="container">
+        
+        <div class="title-area text-center">
+            <h1 class="gradient-text">Network Nodes</h1>
+            <p class="text-muted fw-bold">Select a location to manage branch intelligence and staff assets.</p>
+        </div>
+
+        <div class="row g-5">
+            @if (Model != null)
+            {
+                foreach (var branch in Model)
+                {
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="glass-branch-card h-100">
+                            
+                            <div class="img-frame">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                                     class="branch-img" alt="@branch.Branch_Name">
+                                
+                                <div class="status-pill @(branch.Is_Active ? "bg-active" : "bg-closed")">
+                                    @(branch.Is_Active ? "Online" : "Offline")
+                                </div>
+                            </div>
+
+                            <div class="branch-content">
+                                <h3 class="branch-name">@branch.Branch_Name</h3>
+                                
+                                <div class="mb-3">
+                                    @if(branch.Is_Active) {
+                                        <span class="pulse-dot"></span>
+                                        <span class="text-success fw-bold small">Receiving Orders</span>
+                                    } else {
+                                        <span class="text-danger fw-bold small"><i class="fas fa-power-off mr-1"></i> Maintenance</span>
+                                    }
+                                </div>
+
+                                <span class="branch-sub">Management Portal Access</span>
+
+                                <a asp-action="BranchStaffList" 
+                                   asp-route-branchId="@branch.Branch_Id" 
+                                   asp-route-branchName="@branch.Branch_Name" 
+                                   class="btn-view-staff">
+                                    <i class="fas fa-users-cog mr-2"></i> Access Staff Directory
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

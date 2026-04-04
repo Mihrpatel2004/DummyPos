@@ -1,0 +1,54 @@
+﻿/* Custom Stat Card Colors */
+.bg-danger-custom {
+    background-color: #d62828 !important;
+}
+/* Red */
+.bg-orange-custom {
+    background-color: #f77f00 !important;
+}
+/* Orange */
+.bg-yellow-custom {
+    background-color: #fcbf49 !important;
+}
+/* Yellow/Gold */
+.bg-green-custom {
+    background-color: #2a9d8f !important;
+}
+/* Teal/Green */
+
+.stat-card {
+    border-radius: 8px;
+    border: none;
+    transition: 0.3s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+/* Light Badges for Table Status */
+.bg-success-light {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.bg-warning-light {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.bg-danger-light {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Table Styling */
+.table thead th {
+    font-size: 0.75rem;
+    letter-spacing: 0.05rem;
+    border: none;
+}
+
+.card {
+    border-radius: 12px;
+}

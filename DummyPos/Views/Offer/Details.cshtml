@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Offer Details";
+    Layout = "_AdminLayout";
+}
+@model DummyPos.Models.Offer
+
+<div class="container mt-4">
+    <div class="card col-md-6 offset-md-3 shadow border-0">
+        <div class="card-header bg-info text-white py-3">
+            <h4 class="mb-0">Offer Campaign Details</h4>
+        </div>
+        <div class="card-body p-4">
+            <dl class="row mb-0" style="font-size: 1.05rem;">
+                <dt class="col-sm-5 text-muted mb-2">Offer ID:</dt>
+                <dd class="col-sm-7 fw-bold">@Model.Offer_Id</dd>
+
+                <dt class="col-sm-5 text-muted mb-2">Campaign Name:</dt>
+                <dd class="col-sm-7 text-primary fw-bold">@Model.Offer_Name</dd>
+
+                <dt class="col-sm-5 text-muted mb-2">Discount Value:</dt>
+                <dd class="col-sm-7 text-success fw-bold">@Model.Offer_Percent.ToString("0.00")%</dd>
+
+                <dt class="col-sm-5 text-muted mb-2">Valid From:</dt>
+                <dd class="col-sm-7">@Model.Start_Date.ToString("dd-MMM-yyyy")</dd>
+
+                <dt class="col-sm-5 text-muted mb-2">Valid Until:</dt>
+                <dd class="col-sm-7">@Model.End_Date.ToString("dd-MMM-yyyy")</dd>
+
+                <dt class="col-sm-5 text-muted mb-2">Manual Kill Switch:</dt>
+                <dd class="col-sm-7">
+                    @if (Model.Is_Active)
+                    {
+                        <span class="badge bg-success px-3 py-2">Enabled</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger px-3 py-2">Paused</span>
+                    }
+                </dd>
+            </dl>
+            
+            <div class="alert alert-light mt-3 mb-0 text-muted" style="font-size: 0.9rem; border: 1px dashed #ccc;">
+                <i class="fas fa-info-circle me-1"></i>
+                <strong>Note:</strong> This offer will automatically be applied to all POS orders between the start and end dates as long as the kill switch is "Enabled".
+            </div>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between p-3">
+            <a asp-action="Index" class="btn btn-secondary px-4">Back to List</a>
+            <a asp-action="Edit" asp-route-id="@Model.Offer_Id" class="btn btn-warning px-4 fw-bold text-dark">Edit Offer</a>
+        </div>
+    </div>
+</div>

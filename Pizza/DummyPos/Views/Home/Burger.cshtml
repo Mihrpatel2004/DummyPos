@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Burger Menu";
+}
+
+<link rel="stylesheet" href="~/css/Burger.css" />
+
+<div class="burger-menu-container">
+    <div class="container py-5">
+        <div class="text-center mb-5 text-white">
+            <h1 class="display-4 fw-bold">Gourmet Burgers</h1>
+            <p class="lead">Flame-grilled to perfection with premium ingredients.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4 col-lg-3">
+                <div class="card burger-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top burger-img" alt="Classic Beef">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Classic Cheeseburger</h5>
+                        <p class="card-text text-muted small">Juicy beef patty with cheddar, lettuce, and tomato.</p>
+                        <a href="@Url.Action("Details", "Burgers", new { id = 1 })" class="btn btn-burger w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card burger-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top burger-img" alt="BBQ Bacon">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">BBQ Bacon King</h5>
+                        <p class="card-text text-muted small">Double patty, crispy bacon, and smoky BBQ sauce.</p>
+                        <a href="@Url.Action("Details", "Burgers", new { id = 2 })" class="btn btn-burger w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card burger-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top burger-img" alt="Mushroom Swiss">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Mushroom Swiss</h5>
+                        <p class="card-text text-muted small">Sautéed mushrooms and melted Swiss cheese.</p>
+                        <a href="@Url.Action("Details", "Burgers", new { id = 4 })" class="btn btn-burger w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card burger-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top burger-img" alt="Veggie Burger">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Veggie Deluxe</h5>
+                        <p class="card-text text-muted small">Plant-based patty with fresh avocado slices.</p>
+                        <a href="@Url.Action("Details", "Burgers", new { id = 5 })" class="btn btn-burger w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card burger-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=500&auto=format&fit=crop"
+                             class="card-img-top burger-img" alt="Spicy Burger">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Spicy Inferno</h5>
+                        <p class="card-text text-muted small">Jalapeños, pepper jack cheese, and hot sauce.</p>
+                        <a href="@Url.Action("Details", "Burgers", new { id = 6 })" class="btn btn-burger w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

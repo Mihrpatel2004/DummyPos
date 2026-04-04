@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model DummyPos.Models.FeedbackType
+@{
+    ViewData["Title"] = "Feedback Type Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+    <div class="card col-md-6 offset-md-3 shadow border-0">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Feedback Type Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 text-muted">ID:</dt>
+                <dd class="col-sm-8">@Model.Feedback_Type_Id</dd>
+
+                <dt class="col-sm-4 text-muted">Feedback Name:</dt>
+                <dd class="col-sm-8 text-primary fw-bold fs-5">@Model.Feedback_Type_Name</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-end gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Feedback_Type_Id" class="btn btn-warning px-4">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary px-4">Back to List</a>
+        </div>
+    </div>
+</div>

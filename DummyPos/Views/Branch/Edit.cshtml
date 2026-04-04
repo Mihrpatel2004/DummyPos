@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Banch Edit";
+    Layout = "_AdminLayout";
+}
+
+@model DummyPos.Models.Branch
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Edit Branch</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" asp-for="Branch_Id" />
+
+                        <div class="mb-3">
+                            <label asp-for="Branch_Name" class="form-label"></label>
+                            <input asp-for="Branch_Name" class="form-control" />
+                            <span asp-validation-for="Branch_Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" asp-for="Is_Active">
+                            <label class="form-check-label" asp-for="Is_Active">Is Branch Active?</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success px-4">Save Changes</button>
+                            <a asp-action="BranchList" class="btn btn-secondary px-4">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Service type index";
+    Layout = "_AdminLayout";
+}
+@model IEnumerable<DummyPos.Models.ServiceType>
+
+<div class="card shadow p-3 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Service Types</h3>
+        <a asp-action="Create" class="btn btn-primary">Add New Service</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Service Description</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Service_Type_Desc</strong></td>
+                    <td>
+                        @if (item.Is_Active)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>@item.Created_Date?.ToString("dd-MMM-yyyy")</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Service_Type_Id"
+                               class="btn btn-outline-primary btn-sm">Edit</a>
+
+                            <a asp-action="Details" asp-route-id="@item.Service_Type_Id"
+                               class="btn btn-outline-info btn-sm">Details</a>
+
+                            @if (item.Is_Active)
+                            {
+                                <a asp-action="DeactivateService" asp-route-id="@item.Service_Type_Id"
+                                   class="btn btn-outline-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to deactivate this service?')">
+                                    <i class="bi bi-slash-circle"></i> Deactivate
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="ActivateService" asp-route-id="@item.Service_Type_Id"
+                                   class="btn btn-outline-success btn-sm"
+                                   onclick="return confirm('Are you sure you want to activate this service?')">
+                                    <i class="bi bi-check-circle"></i> Activate
+                                </a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

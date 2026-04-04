@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Pizza Menu";
+}
+
+<link rel="stylesheet" href="~/css/Pizza.css" />
+
+<div class="pizza-menu-container">
+    <div class="container py-5">
+        <div class="text-center mb-5 text-white">
+            <h1 class="display-4 fw-bold">Our Signature Pizzas</h1>
+            <p class="lead">Freshly baked, handcrafted, and delivered hot.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="Pepperoni">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹250</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Pepperoni Feast</h5>
+                        <p class="card-text text-muted small">Double pepperoni with melted mozzarella.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 1 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="Margherita">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Margherita Supreme</h5>
+                        <p class="card-text text-muted small">Fresh basil, tomato, and buffalo mozzarella.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 2 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="Veggie">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹300</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Veggie Paradise</h5>
+                        <p class="card-text text-muted small">Bell peppers, olives, onions, and corn.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 3 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="BBQ Chicken">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹250</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">BBQ Chicken</h5>
+                        <p class="card-text text-muted small">Grilled chicken with smoky BBQ sauce base.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 4 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="Meat Lovers">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Marinara </h5>
+                        <p class="card-text text-muted small">Beef, sausage, ham, and pepperoni.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 5 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="card pizza-card h-100 border-0 shadow-lg">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=500&auto=format&fit=crop" class="card-img-top pizza-img" alt="Hawaiian">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2">₹270</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Hawaiian Special</h5>
+                        <p class="card-text text-muted small">Tropical pineapple and smoked ham.</p>
+                        <a href="@Url.Action("Details", "Pizza", new { id = 6 })" class="btn btn-pizza w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

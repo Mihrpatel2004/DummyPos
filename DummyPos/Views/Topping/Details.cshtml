@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Topping Details";
+    Layout = "_AdminLayout";
+}
+@model DummyPos.Models.Toppings
+
+<div class="container mt-4">
+    <div class="card col-md-6 offset-md-3 shadow">
+        <div class="card-header bg-info text-white">
+            <h4>Topping Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 text-muted">Topping ID:</dt>
+                <dd class="col-sm-8">@Model.Topping_Id</dd>
+
+                <dt class="col-sm-4 text-muted">Name:</dt>
+                <dd class="col-sm-8 text-primary fw-bold">@Model.Topping_Name</dd>
+
+                <dt class="col-sm-4 text-muted">Price:</dt>
+                <dd class="col-sm-8 text-success fw-bold">@Model.Price.ToString("C")</dd>
+
+                <dt class="col-sm-4 text-muted">Status:</dt>
+                <dd class="col-sm-8">
+                    @if (Model.Is_Active)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+
+                        <span class="badge bg-danger">Inactive</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light">
+            <a asp-action="Edit" asp-route-id="@Model.Topping_Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

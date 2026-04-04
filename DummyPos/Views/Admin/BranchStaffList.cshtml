@@ -1,0 +1,288 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model List<DummyPos.Models.StaffDetailViewModel>
+@{
+    ViewData["Title"] = "Staff List";
+    Layout = "_AdminLayout";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* --- VIBRANT FUTURE-LIGHT BACKGROUND --- */
+    .staff-wrapper {
+        background: radial-gradient(circle at top right, #e0e7ff, #f8fafc 50%), radial-gradient(circle at bottom left, #f1f5f9, #ffffff 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 40px;
+        margin: -20px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* --- GLASS HEADER & BACK BUTTON --- */
+    .glass-header-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(15px);
+        border-radius: 24px;
+        padding: 25px 40px;
+        margin-bottom: 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 30px rgba(58, 123, 213, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .gradient-heading {
+        background: linear-gradient(90deg, #1e293b 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        font-size: 1.8rem;
+        letter-spacing: -1px;
+        margin: 0;
+    }
+
+    .btn-glass-back {
+        background: white;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .btn-glass-back:hover {
+            background: #f8fafc;
+            color: #3b82f6;
+            border-color: #3b82f6;
+            transform: translateX(-5px);
+        }
+
+    /* --- TABLE CONTAINER --- */
+    .staff-data-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        overflow: hidden;
+        border: 1px solid white;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+    }
+
+    .table-modern {
+        width: 100%;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        /* Soft Header */
+        .table-modern thead {
+            background: #f8fafc;
+        }
+
+        .table-modern th {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 20px 25px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .table-modern td {
+            padding: 20px 25px;
+            vertical-align: middle;
+            color: #334155;
+            font-weight: 600;
+            border-bottom: 1px solid #f8fafc;
+            transition: all 0.2s;
+        }
+
+        /* Hover effect for rows */
+        .table-modern tbody tr:hover td {
+            background-color: #eff6ff;
+            color: #1e40af;
+        }
+
+    /* --- CUSTOM ELEMENTS --- */
+    .staff-name-main {
+        color: #1e293b;
+        font-weight: 800;
+        font-size: 1rem;
+    }
+
+    .role-badge {
+        background: #eff6ff;
+        color: #3b82f6;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .contact-info {
+        font-size: 0.85rem;
+        color: #64748b;
+    }
+
+    /* Pulse Dot for Status */
+    .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 800;
+        font-size: 0.85rem;
+    }
+
+    .pulse-green {
+        height: 10px;
+        width: 10px;
+        background-color: #10b981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10b981;
+    }
+
+    .pulse-red {
+        height: 10px;
+        width: 10px;
+        background-color: #ef4444;
+        border-radius: 50%;
+    }
+
+    /* Action Button */
+    .btn-profile-view {
+        background: #ffffff;
+        color: #3b82f6;
+        border: 2px solid #3b82f6;
+        padding: 8px 18px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+        .btn-profile-view:hover {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.2);
+        }
+
+    .total-staff-badge {
+        background: #3b82f6;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        margin-left: 15px;
+        vertical-align: middle;
+    }
+</style>
+
+<div class="staff-wrapper">
+    <div class="container-fluid">
+        
+        <div class="glass-header-panel">
+            <div>
+                <h3 class="gradient-heading">
+                    <i class="fas fa-users-cog mr-2" style="color: #3b82f6;"></i> Staff Directory
+                    <span class="total-staff-badge">@(Model?.Count ?? 0) Team Members</span>
+                </h3>
+                <p class="text-muted fw-bold m-0 mt-1">Managing personnel for <strong>@ViewBag.BranchName Branch</strong></p>
+            </div>
+            
+            <a asp-action="BranchDirectory" class="btn-glass-back">
+                <i class="fas fa-arrow-left"></i> Switch Branch
+            </a>
+        </div>
+
+        <div class="staff-data-card shadow-sm">
+            <div class="table-responsive">
+                <table class="table-modern text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Full Name</th>
+                            <th>Designation</th>
+                            <th>Mobile Contact</th>
+                            <th>Work Email</th>
+                            <th>Current Status</th>
+                            <th>Intelligence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            foreach (var staff in Model)
+                            {
+                                <tr>
+                                    <td class="text-left">
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 35px; height: 35px; background: #f1f5f9; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #3b82f6;">
+                                                <i class="fas fa-user-tie"></i>
+                                            </div>
+                                            <span class="staff-name-main">@staff.Staff_Name</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="role-badge">@staff.Role_Desc</span></td>
+                                    <td class="contact-info">
+                                        <i class="fas fa-phone-alt mr-1 text-primary" style="font-size: 0.7rem;"></i> @staff.Phone
+                                    </td>
+                                    <td class="contact-info">
+                                        <i class="fas fa-envelope mr-1 text-primary" style="font-size: 0.7rem;"></i> @staff.Email
+                                    </td>
+                                    <td>
+                                        <div class="status-indicator">
+                                            @if (staff.Is_Active)
+                                            {
+                                                <span class="pulse-green"></span>
+                                                <span class="text-success">ACTIVE</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="pulse-red"></span>
+                                                <span class="text-danger">INACTIVE</span>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a asp-action="ViewStaffDetails" asp-route-staffId="@staff.Staff_Id" class="btn-profile-view">
+                                            <i class="fas fa-id-card mr-1"></i> VIEW PROFILE
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div style="opacity: 0.5;">
+                                        <i class="fas fa-user-slash fa-3x mb-3"></i>
+                                        <h5 class="fw-bold">No Personnel Found</h5>
+                                        <p>This branch currently has no staff assets assigned.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

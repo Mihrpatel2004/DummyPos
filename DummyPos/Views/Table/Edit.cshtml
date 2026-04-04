@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Edit Table";
+    Layout = "_AdminLayout";
+}
+@model DummyPos.Models.RestaurantTable
+
+<div class="container mt-4">
+    <div class="card col-md-6 offset-md-3 shadow">
+        <div class="card-header bg-warning text-dark">
+            <h4>Edit Table</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Table_Id" />
+                <input type="hidden" asp-for="Branch_Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Table_Number" class="form-label"></label>
+                    <input asp-for="Table_Number" class="form-control" />
+                    <span asp-validation-for="Table_Number" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Table_Desc" class="form-label"></label>
+                    <input asp-for="Table_Desc" class="form-control" />
+                    <span asp-validation-for="Table_Desc" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Size" class="form-label"></label>
+                    <input asp-for="Size" class="form-control" type="number" />
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
+                        <option value="Reserved">Reserved</option>
+                        <option value="Out of Service">Out of Service</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4">Update Table</button>
+                <a asp-action="Index" asp-route-branchId="@Model.Branch_Id" class="btn btn-secondary px-4">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

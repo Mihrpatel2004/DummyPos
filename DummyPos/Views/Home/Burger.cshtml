@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Burger Menu";
+}
+
+<link rel="stylesheet" href="~/css/Burger.css" />
+
+<div class="burger-menu-container">
+    <div class="container py-5">
+        <div class="text-center mb-5 text-white">
+            <h1 class="display-4 fw-bold">Gourmet Burgers</h1>
+            <p class="lead">Flame-grilled to perfection with premium ingredients.</p>
+        </div>
+
+        <div class="row g-4">
+            
+            @if (ViewBag.AllBurgerItem != null && ViewBag.AllBurgerItem.Count > 0)
+            {
+                foreach (var item in ViewBag.AllBurgerItem)
+                {
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card burger-card h-100 border-0 shadow-lg">
+                            <div class="position-relative">
+                                
+                                <img src="@item.ImageDataUrl" class="card-img-top burger-img" alt="@item.Item_Name"
+                                     style="height: 200px; object-fit: cover;">
+                                
+                                <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 p-2 fw-bold">₹@item.Amount.ToString("0")</span>
+                            </div>
+                            
+                            <div class="card-body text-center d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title fw-bold">@item.Item_Name</h5>
+                                    
+                                    <p class="card-text text-muted small">Prep Time: @item.Prepare_Time_Minutes mins</p>
+                                </div>
+                                @* 
+                                <a href="@Url.Action("Details", "Home", new { id = item.Item_Id })" class="btn btn-burger w-100 rounded-pill mt-3">View Details</a> *@
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-white py-5">
+                    <i class="fas fa-hamburger fa-3x mb-3 text-warning"></i>
+                    <h3>Firing up the grill! Burger menu updating soon.</h3>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

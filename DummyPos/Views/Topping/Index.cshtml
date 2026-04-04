@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Topping index";
+    Layout = "_AdminLayout";
+}
+@model IEnumerable<DummyPos.Models.Toppings>
+
+<div class="card shadow p-3 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Manage Toppings</h3>
+        <a asp-action="Create" class="btn btn-primary">Add New Topping</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Topping Name</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Topping_Name</strong></td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>
+                        @if (item.Is_Active)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Topping_Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Topping_Id" class="btn btn-outline-info btn-sm">Details</a>
+
+                            @if (item.Is_Active)
+                            {
+                                <a asp-action="DeactivateTopping" asp-route-id="@item.Topping_Id"
+                                   class="btn btn-outline-warning btn-sm"
+                                   onclick="return confirm('Deactivate this topping?')">
+                                    <i class="bi bi-slash-circle"></i> Deactivate
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="ActivateTopping" asp-route-id="@item.Topping_Id"
+                                   class="btn btn-outline-success btn-sm"
+                                   onclick="return confirm('Activate this topping?')">
+                                    <i class="bi bi-check-circle"></i> Activate
+                                </a>
+                            }
+
+                            <a asp-action="Delete" asp-route-id="@item.Topping_Id"
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to completely DELETE this topping? This action cannot be undone.')">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
