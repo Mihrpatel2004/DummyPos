@@ -13,6 +13,9 @@ namespace DummyPos.Repositories.Interface
         void DeleteItem(int id);
         void ActivateItem(int id);
         void DeactivateItem(int id);
+        //
+        List<ItemSearchViewModel> SearchAdminItems(string searchTerm);
+        //
 
         // This is required to populate the dropdown list for Item Categories in Create/Edit forms
         List<SelectListItem> GetCategoryDropdown();

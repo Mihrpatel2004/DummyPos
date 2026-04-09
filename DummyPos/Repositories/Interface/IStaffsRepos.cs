@@ -77,5 +77,7 @@ namespace DummyPos.Repositories.Interface
         List<FeedbackType> GetFeedbackTypesForPos();
         bool SaveOrderFeedback(int orderId, int feedbackTypeId, int rating, string comments);
         decimal GetTodayActiveDiscount();
+
+
     }
 }

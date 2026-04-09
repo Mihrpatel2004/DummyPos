@@ -12,5 +12,7 @@ namespace DummyPos.Repositories.Interface
         //new 
         List<AdminOrderViewModel> GetFilteredOrders(int branchId, DateTime? startDate, DateTime? endDate);
         List<AdminOrderItemViewModel> GetOrderItemsAdmin(int orderId);
+
+        List<StaffResult> SearchAdminStaff(string searchTerm);
     }
 }

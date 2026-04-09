@@ -1,72 +1,170 @@
 ﻿@model DummyPos.Models.Item
 @{
-    Layout = "_Layout";
-    ViewData["Title"] = Model.Item_Name;
-
-    // --- SMART BACK BUTTON LOGIC ---
-    // We check the category ID from the database to decide which page to return to!
-    string backAction = "Pizza"; // Default fallback
-    string categoryIcon = "fa-pizza-slice";
-
-    if (Model.Item_Category_Id == 1)
-    {
-        backAction = "Pizza";
-        categoryIcon = "fa-pizza-slice";
-    }
-    else if (Model.Item_Category_Id == 2)
-    {
-        backAction = "Drink";
-        categoryIcon = "fa-glass-cheers";
-    }
-    else if (Model.Item_Category_Id == 3)
-    {
-        backAction = "Burger";
-        categoryIcon = "fa-hamburger";
-    }
+    ViewData["Title"] = "Item Details";
+    Layout = "_AdminLayout";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="row g-0">
+<style>
+    /* Admin Dashboard Box Styling */
+    .admin-detail-card {
+        border-radius: 8px;
+        transition: box-shadow 0.2s ease-in-out;
+    }
+    .admin-detail-card:hover {
+        box-shadow: 0 8px 15px rgba(0,0,0,0.05) !important;
+    }
+    .property-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .property-value {
+        color: #2b2f32;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="h3 mb-0 text-dark fw-bold"><i class="fas fa-file-alt text-primary me-2"></i> Item Details</h2>
+            <p class="text-muted mb-0">Complete database record for this menu item</p>
+        </div>
+        <a href="/Item/Index" class="btn btn-outline-secondary shadow-sm px-4">
+            <i class="fas fa-arrow-left me-2"></i> Back to Item List
+        </a>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-danger shadow-sm border-0"><i class="fas fa-exclamation-triangle me-2"></i> Error: Item record could not be found in the database.</div>
+        return; 
+    }
+
+    <div class="row g-4">
+        
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow-sm border-0 admin-detail-card h-100">
+                <div class="card-header bg-white py-3 border-bottom-0">
+                    <h6 class="m-0 font-weight-bold text-primary">Item Media & Status</h6>
+                </div>
+                <div class="card-body text-center d-flex flex-column">
                     
-                    <div class="col-md-6 d-flex align-items-center bg-light">
-                        <img src="@Model.ImageDataUrl" class="img-fluid w-100" alt="@Model.Item_Name" style="object-fit: cover; min-height: 400px;" />
+                    <div class="bg-light rounded p-3 mb-4 d-flex align-items-center justify-content-center" style="height: 260px; border: 1px dashed #ced4da;">
+                        @if (!string.IsNullOrEmpty(Model.ImageDataUrl))
+                        {
+                            <img src="@Model.ImageDataUrl" alt="@Model.Item_Name" class="img-fluid rounded" style="max-height: 240px; object-fit: contain;" />
+                        }
+                        else
+                        {
+                            <div class="text-muted opacity-50">
+                                <i class="fas fa-image fa-5x mb-2 d-block"></i>
+                                <span>No Image Uploaded</span>
+                            </div>
+                        }
                     </div>
 
-                    <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
-                        
-                        <div class="mb-3">
-                            <span class="badge bg-dark px-3 py-2 rounded-pill fs-6 shadow-sm">
-                                <i class="fas @categoryIcon text-warning me-1"></i> @Model.Item_Category_Desc
-                            </span>
-                        </div>
+                    <h4 class="fw-bold mb-1">@Model.Item_Name</h4>
+                    
+                    <div class="mb-4">
+                        @if (Model.Is_Active)
+                        {
+                            <span class="badge bg-success px-4 py-2 fs-6 rounded-pill"><i class="fas fa-check-circle me-1"></i> Active in System</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger px-4 py-2 fs-6 rounded-pill"><i class="fas fa-times-circle me-1"></i> Disabled</span>
+                        }
+                    </div>
 
-                        <h1 class="display-5 fw-bold text-dark mb-3">@Model.Item_Name</h1>
-                        
-                        <hr class="w-25 border-danger border-3 opacity-100 mb-4">
-
-                        <div class="d-flex align-items-center mb-4 text-muted">
-                            <i class="fas fa-clock fa-lg me-2 text-warning"></i>
-                            <span class="fs-5">
-                                @(Model.Prepare_Time_Minutes.HasValue ? $"Freshly prepared in {Model.Prepare_Time_Minutes} mins" : "Ready to serve")
-                            </span>
-                        </div>
-
-                        <h2 class="text-danger fw-bold display-6 mb-5">₹@Model.Amount.ToString("0.00")</h2>
-
-                        <div class="d-grid gap-3 d-md-flex mt-auto">
-                            <a asp-action="@backAction" asp-controller="Home" class="btn btn-outline-dark btn-lg px-4 rounded-pill fw-bold w-100">
-                                <i class="fas fa-arrow-left me-2"></i> Back to Menu
-                            </a>
-                        </div>
-
+                    <div class="mt-auto d-grid gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model.Item_Id" class="btn btn-primary"><i class="fas fa-edit me-2"></i> Edit Record</a>
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <div class="col-xl-8 col-lg-7">
+            <div class="row g-4">
+                
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 admin-detail-card border-top border-primary border-3 h-100">
+                        <div class="card-body p-4">
+                            <h5 class="text-primary fw-bold mb-4"><i class="fas fa-info-circle me-2"></i> Basic Information</h5>
+                            
+                            <div class="mb-3">
+                                <div class="property-label mb-1">Item ID (Primary Key)</div>
+                                <div class="property-value">#@Model.Item_Id</div>
+                            </div>
+                            
+                            <hr class="text-muted opacity-25">
+                            
+                            <div class="mb-3">
+                                <div class="property-label mb-1">Registered Name</div>
+                                <div class="property-value">@Model.Item_Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 admin-detail-card border-top border-success border-3 h-100">
+                        <div class="card-body p-4">
+                            <h5 class="text-success fw-bold mb-4"><i class="fas fa-tags me-2"></i> Pricing & Operations</h5>
+                            
+                            <div class="mb-3">
+                                <div class="property-label mb-1">Selling Amount</div>
+                                <div class="property-value text-success fs-3">₹@Model.Amount.ToString("0.00")</div>
+                            </div>
+                            
+                            <hr class="text-muted opacity-25">
+                            
+                            <div class="mb-3">
+                                <div class="property-label mb-1">Kitchen Prep Time</div>
+                                <div class="property-value">
+                                    @if (Model.Prepare_Time_Minutes.HasValue && Model.Prepare_Time_Minutes > 0)
+                                    {
+                                        <span><i class="fas fa-clock text-warning me-2"></i> @Model.Prepare_Time_Minutes Minutes</span>
+                                    }
+                                    else
+                                    {
+                                        <span><i class="fas fa-bolt text-warning me-2"></i> Instant / Ready-made</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 admin-detail-card border-top border-info border-3">
+                        <div class="card-body p-4">
+                            <h5 class="text-info fw-bold mb-4"><i class="fas fa-layer-group me-2"></i> Categorization & Layout</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <div class="property-label mb-1">Category Foreign Key ID</div>
+                                    <div class="property-value">@Model.Item_Category_Id</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-label mb-1">Category Description</div>
+                                    <div class="property-value">
+                                        <span class="badge bg-light text-dark border px-3 py-2 fs-6">
+                                            @Model.Item_Category_Desc
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
     </div>
 </div>

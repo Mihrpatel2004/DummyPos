@@ -3,3 +3,75 @@
 *@
 @{
 }
+@model DummyPos.Models.Item
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Item_Name;
+
+    // --- SMART BACK BUTTON LOGIC ---
+    // We check the category ID from the database to decide which page to return to!
+    string backAction = "Pizza"; // Default fallback
+    string categoryIcon = "fa-pizza-slice";
+
+    if (Model.Item_Category_Id == 1)
+    {
+        backAction = "Pizza";
+        categoryIcon = "fa-pizza-slice";
+    }
+    else if (Model.Item_Category_Id == 2)
+    {
+        backAction = "Drink";
+        categoryIcon = "fa-glass-cheers";
+    }
+    else if (Model.Item_Category_Id == 3)
+    {
+        backAction = "Burger";
+        categoryIcon = "fa-hamburger";
+    }
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="row g-0">
+                    
+                    <div class="col-md-6 d-flex align-items-center bg-light">
+                        <img src="@Model.ImageDataUrl" class="img-fluid w-100" alt="@Model.Item_Name" style="object-fit: cover; min-height: 400px;" />
+                    </div>
+
+                    <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-dark px-3 py-2 rounded-pill fs-6 shadow-sm">
+                                <i class="fas @categoryIcon text-warning me-1"></i> @Model.Item_Category_Desc
+                            </span>
+                        </div>
+
+                        <h1 class="display-5 fw-bold text-dark mb-3">@Model.Item_Name</h1>
+                        
+                        <hr class="w-25 border-danger border-3 opacity-100 mb-4">
+
+                        <div class="d-flex align-items-center mb-4 text-muted">
+                            <i class="fas fa-clock fa-lg me-2 text-warning"></i>
+                            <span class="fs-5">
+                                @(Model.Prepare_Time_Minutes.HasValue ? $"Freshly prepared in {Model.Prepare_Time_Minutes} mins" : "Ready to serve")
+                            </span>
+                        </div>
+
+                        <h2 class="text-danger fw-bold display-6 mb-5">₹@Model.Amount.ToString("0.00")</h2>
+
+                        <div class="d-grid gap-3 d-md-flex mt-auto">
+                            <a asp-action="@backAction" asp-controller="Home" class="btn btn-outline-dark btn-lg px-4 rounded-pill fw-bold w-100">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Menu
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

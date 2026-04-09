@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DummyPos.Models;
+﻿using DummyPos.Models;
+using DummyPos.Repositories.Implementation;
 using DummyPos.Repositories.Interface;
+using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
 namespace DummyPos.Controllers
@@ -15,13 +16,22 @@ namespace DummyPos.Controllers
         }
 
         // INDEX: Show List of Items
-        public IActionResult Index()
+        /*public IActionResult Index()
         {
             var list = _repo.GetAllItems();
             return View(list);
+        }*/
+        [HttpGet]
+        public IActionResult Index(string searchTerm)
+        {
+            AdminManageItemsViewModel model = new AdminManageItemsViewModel
+            {
+                SearchTerm = searchTerm,
+                ItemList = _repo.SearchAdminItems(searchTerm)
+            };
+
+            return View(model);
         }
-        /*   => View(_repo.GetAllItems());
-   */
         // CREATE: Get and Post
         [HttpGet]
         public IActionResult Create()

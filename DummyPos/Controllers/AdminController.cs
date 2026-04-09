@@ -67,10 +67,24 @@ namespace DummyPos.Controllers
         //---------------------------------------------------
         // STAFF LIST
         //---------------------------------------------------
-        public IActionResult StaffList()
+        /*public IActionResult StaffList()
         {
             var staff = _staffRepo.GetAllStaff();
             return View(staff);
+        }*/
+
+        [HttpGet]
+        public IActionResult StaffList(string searchTerm)
+        {
+            // If searchTerm is null, the repository will automatically return ALL staff.
+            // If it has text, it will filter by Name, Branch, Role, Phone, or Salary.
+            StaffSearchViewModel model = new StaffSearchViewModel
+            {
+                SearchTerm = searchTerm,
+                StaffList = _adminRepo.SearchAdminStaff(searchTerm)
+            };
+
+            return View(model);
         }
 
         //---------------------------------------------------

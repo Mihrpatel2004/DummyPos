@@ -15,6 +15,44 @@ namespace DummyPos.Repositories.Implementation
         {
             _dbHelper = dbHelper;
         }
+        //
+        public List<StaffResult> SearchAdminStaff(string searchTerm)
+        {
+            List<StaffResult> staffList = new List<StaffResult>();
+
+            using (Microsoft.Data.SqlClient.SqlConnection con = _dbHelper.GetConnection())
+            {
+                // Call the new Universal SP
+                using (SqlCommand cmd = new SqlCommand("sp_SearchStaff_Universal", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the single search term
+                    cmd.Parameters.AddWithValue("@SearchTerm", string.IsNullOrEmpty(searchTerm) ? DBNull.Value : (object)searchTerm);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            staffList.Add(new StaffResult
+                            {
+                                Staff_Id = Convert.ToInt32(reader["Staff_Id"]),
+                                Staff_Name = reader["Staff_Name"].ToString(),
+                                Username = reader["Username"].ToString(),
+                                Salary = Convert.ToDecimal(reader["Salary"]),
+                                Branch_Name = reader["Branch_Name"].ToString(),
+                                Role_Desc = reader["Role_Desc"].ToString(),
+                                Phone = reader["Phone"].ToString(),
+                                Is_Active = Convert.ToBoolean(reader["Is_Active"])
+                            });
+                        }
+                    }
+                }
+            }
+            return staffList;
+        }
+        //
         public List<Branch> GetAllBranches()
         {
             List<Branch> branches = new List<Branch>();

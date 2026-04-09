@@ -17,6 +17,7 @@ namespace DummyPos.Repositories.Implementation
         {
             _dbHelper = dbHelper;
         }
+        
 
         public List<Item> GetAllItems()
         {
@@ -179,5 +180,51 @@ namespace DummyPos.Repositories.Implementation
             }
             return categories;
         }
+
+        //
+        public List<ItemSearchViewModel> SearchAdminItems(string searchTerm)
+        {
+            List<ItemSearchViewModel> itemList = new List<ItemSearchViewModel>();
+
+            using (SqlConnection con = _dbHelper.GetConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_SearchItems_Universal", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SearchTerm", string.IsNullOrEmpty(searchTerm) ? DBNull.Value : (object)searchTerm);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var item = new ItemSearchViewModel
+                            {
+                                Item_Id = Convert.ToInt32(reader["Item_Id"]),
+                                Item_Name = reader["Item_Name"].ToString(),
+                                Amount = Convert.ToDecimal(reader["Amount"]),
+
+                                // New Admin Fields
+                                Category = reader["Category"].ToString(),
+                                Prepare_Time_Minutes = reader["Prepare_Time_Minutes"] != DBNull.Value ? Convert.ToInt32(reader["Prepare_Time_Minutes"]) : 0,
+                                Is_Active = Convert.ToBoolean(reader["Is_Active"])
+                            };
+
+                            // Format the byte[] into your ImageDataUrl string safely
+                            if (reader["Item_Image"] != DBNull.Value)
+                            {
+                                byte[] imgBytes = (byte[])reader["Item_Image"];
+                                string base64String = Convert.ToBase64String(imgBytes);
+                                item.ImageDataUrl = $"data:image/jpeg;base64,{base64String}";
+                            }
+
+                            itemList.Add(item);
+                        }
+                    }
+                }
+            }
+            return itemList;
+        }
+        //
     }
 }

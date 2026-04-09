@@ -686,5 +686,7 @@ namespace DummyPos.Repositories.Implementation
             }
             return model;
         }
+
+
     }
 }

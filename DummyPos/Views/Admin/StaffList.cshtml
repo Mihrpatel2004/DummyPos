@@ -1,25 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860 *@
 @{
     ViewData["Title"] = "Staff list";
 }
-@model IEnumerable<DummyPos.Models.Staffs>
-
+@model DummyPos.Models.StaffSearchViewModel
 
 @* Link to the separate CSS file *@
 <link rel="stylesheet" href="~/css/Staff-ListView.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <div class="content-wrapper-custom py-4">
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    
+    <div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
         <div>
             <h2 class="display-6 fw-bold text-primary">Staff Directory</h2>
-            <p class="text-muted mb-0">Manage employees across all branches</p>
+            <p class="text-muted mb-1">Manage employees across all branches</p>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary px-2 py-1">
+                Showing @Model.StaffList.Count Staff Members
+            </span>
         </div>
-        <a asp-action="Create" class="btn btn-add-staff shadow-sm">
-            <i class="fas fa-user-plus me-2"></i>Add New Staff
-        </a>
+        
+        <div class="d-flex flex-wrap align-items-center gap-3">
+            <form method="get" action="/Admin/StaffList" class="d-flex shadow-sm rounded">
+                <input type="text" name="searchTerm" class="form-control border-0"
+                       placeholder="Search Name, Role, Branch..."
+                       value="@Model.SearchTerm" style="min-width: 260px; border-radius: 4px 0 0 4px;" />
+                
+                <button type="submit" class="btn btn-primary" style="border-radius: 0;" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/Admin/StaffList" class="btn btn-secondary" style="border-radius: 0 4px 4px 0;" title="Clear Search">
+                    <i class="fas fa-times"></i>
+                </a>
+            </form>
+
+            <a asp-action="Create" class="btn btn-add-staff shadow-sm">
+                <i class="fas fa-user-plus me-2"></i>Add New Staff
+            </a>
+        </div>
     </div>
 
     <div class="card main-card border-0 shadow-sm">
@@ -37,61 +54,75 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model.StaffList.Count > 0)
+                        {
+                            @foreach (var item in Model.StaffList)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-circle">
+                                                @(!string.IsNullOrEmpty(item.Staff_Name) ? item.Staff_Name.Substring(0, 1).ToUpper() : "?")
+                                            </div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold text-dark">@item.Staff_Name</div>
+                                                <small class="text-muted">ID: #@item.Staff_Id</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="contact-info">
+                                            <div><i class="fas fa-user me-2 text-muted"></i>@item.Username</div>
+                                            <div><i class="fas fa-phone me-2 text-muted"></i>@item.Phone</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-role">@item.Role_Desc</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-secondary fw-medium">
+                                            <i class="fas fa-map-marker-alt me-1"></i> @item.Branch_Name
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.Is_Active)
+                                        {
+                                            <span class="status-indicator active">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-indicator inactive">Inactive</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group shadow-sm">
+                                            <a asp-action="StaffDetails" asp-route-id="@item.Staff_Id"
+                                                   class="btn btn-view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a asp-action="EditStaff" asp-route-id="@item.Staff_Id"
+                                                   class="btn btn-edit" title="Edit Staff Details">
+                                                <i class="fas fa-user-edit"></i>
+                                            </a>
+                                            <a asp-action="DeactivateStaff" asp-route-id="@item.Staff_Id"
+                                                   class="btn btn-deactivate"
+                                                   onclick="return confirm('Are you sure you want to deactivate @item.Staff_Name?')"
+                                                   title="Deactivate">
+                                                <i class="fas fa-user-slash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-circle">
-                                            @item.Staff_Name.Substring(0, 1).ToUpper()
-                                        </div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold text-dark">@item.Staff_Name</div>
-                                            <small class="text-muted">ID: #@item.Staff_Id</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="contact-info">
-                                        <div><i class="fas fa-envelope me-2 text-muted"></i>@item.Email</div>
-                                        <div><i class="fas fa-phone me-2 text-muted"></i>@item.Phone</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-role">@item.Role_Name</span>
-                                </td>
-                                <td>
-                                    <span class="text-secondary fw-medium">
-                                        <i class="fas fa-map-marker-alt me-1"></i> @item.Branch_Name
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    @if (item.Is_Active)
-                                    {
-                                        <span class="status-indicator active">Active</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="status-indicator inactive">Inactive</span>
-                                    }
-                                </td>
-                                <td class="text-end pe-4">
-                                    <div class="btn-group shadow-sm">
-                                        <a asp-action="StaffDetails" asp-route-id="@item.Staff_Id"
-                                           class="btn btn-view" title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a asp-action="EditStaff" asp-route-id="@item.Staff_Id"
-                                           class="btn btn-edit" title="Edit Staff Details">
-                                            <i class="fas fa-user-edit"></i>
-                                        </a>
-                                       
-                                        <a asp-action="DeactivateStaff" asp-route-id="@item.Staff_Id"
-                                           class="btn btn-deactivate"
-                                           onclick="return confirm('Are you sure you want to deactivate @item.Staff_Name?')"
-                                           title="Deactivate">
-                                            <i class="fas fa-user-slash"></i>
-                                        </a>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="text-muted">
+                                        <i class="fas fa-search fa-3x mb-3 text-light"></i>
+                                        <h5 class="fw-bold">No staff members found matching "@Model.SearchTerm"</h5>
+                                        <p class="mb-0">Try adjusting your search filter or clear the search to see all staff.</p>
                                     </div>
                                 </td>
                             </tr>

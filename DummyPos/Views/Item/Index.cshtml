@@ -1,93 +1,181 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860 *@
 @{
     ViewData["Title"] = "Item Index";
     Layout = "_AdminLayout";
 }
-@model IEnumerable<DummyPos.Models.Item>
+@model DummyPos.Models.AdminManageItemsViewModel
 
-<div class="card shadow p-3 mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Manage Items</h3>
-        <a asp-action="Create" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add New Item
-        </a>
+<style>
+    /* Custom Styling for the Item Cards to make them attractive */
+    .item-card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .item-image-wrapper {
+        position: relative;
+        height: 180px;
+        width: 100%;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #eee;
+    }
+    .item-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .status-badge-overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .category-badge {
+        background-color: #e3f2fd;
+        color: #0d6efd;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    
+    <div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="display-6 fw-bold text-dark mb-1">Manage Menu Items</h2>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary px-3 py-1">
+                Showing @Model.ItemList.Count Items
+            </span>
+        </div>
+        
+        <div class="d-flex flex-wrap align-items-center gap-3">
+            <form method="get" action="/Item/Index" class="d-flex shadow-sm rounded">
+                <input type="text" name="searchTerm" class="form-control border-0" 
+                       placeholder="Search Pizza, Price, Category..." 
+                       value="@Model.SearchTerm" style="min-width: 280px; border-radius: 6px 0 0 6px;" />
+                
+                <button type="submit" class="btn btn-primary px-3" style="border-radius: 0;">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/Admin/ManageItems" class="btn btn-secondary px-3" style="border-radius: 0 6px 6px 0;" title="Clear">
+                    <i class="fas fa-times"></i>
+                </a>
+            </form>
+
+            <a asp-action="Create" class="btn btn-primary shadow-sm px-4">
+                <i class="fas fa-plus-circle me-2"></i> Add New Item
+            </a>
+        </div>
     </div>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th class="text-center">Image</th>
-                <th>Item Name</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Prep Time</th>
-                <th>Status</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
+    @if (Model.ItemList != null && Model.ItemList.Any())
+    {
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+            @foreach (var item in Model.ItemList)
             {
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="text-center">
-                            <img src="@item.ImageDataUrl" alt="@item.Item_Name" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" />
-                        </td>
-                        <td><strong>@item.Item_Name</strong></td>
-                        <td>@item.Item_Category_Desc</td>
-                        <td>@item.Amount.ToString("C")</td>
-                        <td>@(item.Prepare_Time_Minutes.HasValue ? $"{item.Prepare_Time_Minutes} mins" : "-")</td>
-                        <td>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 item-card">
+                        
+                        <div class="item-image-wrapper">
                             @if (item.Is_Active)
                             {
-                                <span class="badge bg-success">Active</span>
+                                <span class="badge bg-success status-badge-overlay px-2 py-1"><i class="fas fa-check-circle me-1"></i> Active</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger">Inactive</span>
+                                <span class="badge bg-danger status-badge-overlay px-2 py-1"><i class="fas fa-times-circle me-1"></i> Inactive</span>
                             }
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Item_Id" class="btn btn-outline-primary btn-sm">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Item_Id" class="btn btn-outline-info btn-sm">Details</a>
 
+                            @if (!string.IsNullOrEmpty(item.ImageDataUrl))
+                            {
+                                <img src="@item.ImageDataUrl" alt="@item.Item_Name" class="item-img" />
+                            }
+                            else
+                            {
+                                <i class="fas fa-pizza-slice fa-4x text-muted opacity-25"></i>
+                            }
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold text-dark mb-0 line-clamp-2">@item.Item_Name</h5>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <span class="badge category-badge">@item.Category</span>
+                            </div>
+
+                            <div class="mt-auto d-flex justify-content-between align-items-end">
+                                <div>
+                                    <small class="text-muted d-block mb-1">
+                                        <i class="fas fa-clock me-1"></i> 
+                                        @(item.Prepare_Time_Minutes.HasValue && item.Prepare_Time_Minutes > 0 ? $"{item.Prepare_Time_Minutes} mins prep" : "Instant")
+                                    </small>
+                                    <h4 class="text-success fw-bold mb-0">₹ @item.Amount.ToString("0.00")</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-white border-top p-3">
+                            <div class="d-flex justify-content-between gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.Item_Id" class="btn btn-sm btn-outline-primary flex-grow-1" title="Edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a  asp-action="Details" asp-route-id="@item.Item_Id" class="btn btn-sm btn-outline-info flex-grow-1" title="Details">
+                                    <i class="fas fa-eye"></i> Details
+                                </a>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between gap-2 mt-2">
                                 @if (item.Is_Active)
                                 {
-                                    <a asp-action="DeactivateItem" asp-route-id="@item.Item_Id"
-                                       class="btn btn-outline-warning btn-sm"
-                                       onclick="return confirm('Deactivate this item?')">
-                                        <i class="bi bi-slash-circle"></i> Deactivate
+                                    <a asp-action="DeactivateItem" asp-route-id="@item.Item_Id" class="btn btn-sm btn-outline-warning w-50" onclick="return confirm('Deactivate @item.Item_Name?')">
+                                        Disable
                                     </a>
                                 }
                                 else
                                 {
-                                    <a asp-action="ActivateItem" asp-route-id="@item.Item_Id"
-                                       class="btn btn-outline-success btn-sm"
-                                       onclick="return confirm('Activate this item?')">
-                                        <i class="bi bi-check-circle"></i> Activate
+                                    <a asp-action="ActivateItem" asp-route-id="@item.Item_Id" class="btn btn-sm btn-outline-success w-50" onclick="return confirm('Activate @item.Item_Name?')">
+                                        Enable
                                     </a>
                                 }
-
-                                <a asp-action="Delete" asp-route-id="@item.Item_Id"
-                                   class="btn btn-outline-danger btn-sm"
-                                   onclick="return confirm('Are you sure you want to completely DELETE this item? This action cannot be undone.')">
-                                    <i class="bi bi-trash"></i> Delete
+                                <a asp-action="Delete" asp-route-id="@item.Item_Id" class="btn btn-sm btn-outline-danger w-50" onclick="return confirm('Permanently DELETE @item.Item_Name?')">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </div>
-                        </td>
-                    </tr>
-                }
+                        </div>
+
+                    </div>
+                </div>
             }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center text-muted">No items found.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body text-center py-5">
+                <div class="text-muted">
+                    <i class="fas fa-search fa-4x mb-3 text-light"></i>
+                    <h4 class="fw-bold text-dark">No items found</h4>
+                    @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                    {
+                        <p class="text-muted">We couldn't find any menu items matching "<strong>@Model.SearchTerm</strong>". Try adjusting your filter.</p>
+                        <a href="/Admin/ManageItems" class="btn btn-primary mt-2">Clear Search</a>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Your menu is currently empty. Start by adding some delicious items!</p>
+                        <a asp-action="Create" class="btn btn-primary mt-2"><i class="fas fa-plus"></i> Add First Item</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
 </div>
