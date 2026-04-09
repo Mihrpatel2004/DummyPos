@@ -26,15 +26,15 @@
             </div> *@
             <div class="list-group list-group-flush">
                  <a asp-controller="Staffs" asp-action="Order" class="list-group-item @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
-                    <i class="fas fa-tachometer-alt me-3"></i>Create Orders
+                    <i class="fas fa-tachometer-alt me-3 text-warning"></i>Create Orders
                 </a>
                     <a asp-controller="Staffs" asp-action="RunningTables" class="list-group-item @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
-                        <i class="fas fa-tachometer-alt me-3"></i>Running Table
+                        <i class="fas fa-tachometer-alt me-3 text-warning"></i>Running Table
                     </a>
                 
                 <li class="nav-item mt-4" style="border-top: 1px solid #444; padding-top: 10px;">
                     <a href="@Url.Action("Profile", "Staffs")" class="nav-link text-center" title="Staff Profile">
-                        <i class="fas fa-user-cog" style="font-size: 1.5rem; color: #ccc;"></i>
+                        <i class="fas fa-user-cog text-primary" style="font-size: 1.5rem; color: #ccc;"></i>
                     </a>
                 </li>
                 <br />
@@ -42,7 +42,7 @@
                 <form asp-controller="Auth" asp-action="Logout" method="post">
 
                     <button type="submit" class="list-group-item bg-transparent border-0 text-start w-100">
-                        <i class="fas fa-sign-out-alt me-3"></i> Log Out
+                        <i class="fas fa-sign-out-alt me-3 text-danger"></i> Log Out
                     </button>
 
                 </form>

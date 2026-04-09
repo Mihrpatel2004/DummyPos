@@ -14,14 +14,9 @@
     <div class="d-flex" id="wrapper">
         <div class="bg-dark-sidebar" id="sidebar-wrapper">
             <div class="sidebar-heading text-white py-4 px-3">
-                <i class="fas fa-pizza-slice me-2 text-warning"></i> <strong> ADMIN Panel </strong>
+                <i class="fas fa-store me-2 text-warning"></i><strong> ADMIN Panel </strong>
             </div>
-            @* <div class="admin-profile-img-container">
-                <img src="~/images/admin-profile.jpg"
-                     alt="Admin"
-                     class="rounded-circle border border-2 border-white shadow-sm"
-                     asp-append-version="true">
-            </div> *@
+           
             <div class="list-group list-group-flush">
                 @{
                     // Get the current Controller and Action to accurately highlight the exact button
@@ -30,98 +25,70 @@
                 }
     
                 <a asp-controller="Admin" asp-action="Dashboard" class="list-group-item @(c == "Admin" && a == "Dashboard" ? "active" : "")">
-                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                    <i class="fas fa-tachometer-alt me-2 text-warning"></i>Dashboard
                 </a>
                 <a asp-controller="Admin" asp-action="BranchDirectory" class="list-group-item @(c == "Admin" && a == "BranchDirectory" ? "active" : "")">
-                    <i class="fas fa-tachometer-alt me-3"></i>Details Branch
+                    <i class="fas fa-info-circle me-2 text-warning"></i>Details Branch
                 </a>
                 <a asp-controller="Admin" asp-action="AllOrders" class="list-group-item @(c == "Admin" && a == "AllOrders" ? "active" : "")">
-                    <i class="fas fa-tachometer-alt me-3"></i>Show orders
+                    <i class="fas fa-clipboard-list me-2 text-warning"></i>Show orders
                 </a>
                 <a asp-controller="Item" asp-action="Index" class="list-group-item @(c == "Item" ? "active" : "")">
-                    <i class="fas fa-shopping-cart me-3"></i>Modified Item
+                    <i class="fas fa-utensils me-2 text-warning"></i>Items Info
                 </a>
                 <a asp-controller="Admin" asp-action="StaffList" class="list-group-item @(c == "Admin" && a == "StaffList" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Staff
+                    <i class="fas fa-users me-2 text-warning"></i>Manage Staff
                 </a>
                 <a asp-controller="Role" asp-action="Index" class="list-group-item @(c == "Role" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Role
+                    <i class="fas fa-user-cog me-2 text-warning"></i>Manage Role
                 </a>
                 <a asp-controller="Branch" asp-action="BranchList" class="list-group-item @(c == "Branch" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Branch
+                    <i class="fas fa-store-alt me-2 text-warning"></i>Manage Branch
                 </a>
                 <a asp-controller="ItemCategory" asp-action="Index" class="list-group-item @(c == "ItemCategory" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Item_category
+                    <i class="fas fa-tags me-2 text-warning"></i>Manage Item_category
                 </a>
                 <a asp-controller="ServiceType" asp-action="Index" class="list-group-item @(c == "ServiceType" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Service Type
+                    <i class="fas fa-concierge-bell me-2 text-warning"></i>Manage Service Type
                 </a>
                 <a asp-controller="PaymentType" asp-action="Index" class="list-group-item @(c == "PaymentType" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Payment Type
+                    <i class="fas fa-credit-card me-2 text-warning"></i>Payment Type
                 </a>
                 <a asp-controller="OrderStatus" asp-action="Index" class="list-group-item @(c == "OrderStatus" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Orders Status
+                    <i class="fas fa-tasks me-2 text-warning"></i>Manage Orders Status
                 </a>
                 <a asp-controller="OrderSource" asp-action="Index" class="list-group-item @(c == "OrderSource" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Orders Source
+                    <i class="fas fa-share-alt me-2 text-warning"></i>Manage Orders Source
                 </a>
                 <a asp-controller="Topping" asp-action="Index" class="list-group-item @(c == "Topping" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Toppings
+                    <i class="fas fa-pepper-hot me-2 text-warning"></i>Manage Toppings
                 </a>
                 <a asp-controller="Offer" asp-action="Index" class="list-group-item @(c == "Offer" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage All Offer
+                    <i class="fas fa-gift me-2 text-warning"></i>Manage All Offer
                 </a>
    
                 <a asp-controller="FeedbackType" asp-action="Index" class="list-group-item @(c == "FeedbackType" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Manage Feedback Type
+                    <i class="fas fa-comment-dots me-2 text-warning"></i>Manage Feedback Type
                 </a>
                 <a asp-controller="ItemGstRate" asp-action="Index" class="list-group-item @(c == "ItemGstRate" ? "active" : "")">
-                    <i class="fas fa-utensils me-3"></i>Item GST-Rate
+                    <i class="fas fa-file-invoice-dollar me-2 text-warning"></i>Item GST-Rate
                 </a>
 
                 <li class="nav-item mt-4" style="border-top: 1px solid #444; padding-top: 10px;">
                     <a href="@Url.Action("Profile", "Admin")" class="nav-link text-center" title="Admin Profile">
-                        <i class="fas fa-user-cog" style="font-size: 1.5rem; color: #ccc;"></i>
+                        <i class="fas fa-user-cog text-primary" style="font-size: 1.5rem; color: #ccc;"></i>
                     </a>
                 </li>
                 <br />
 
                 <form asp-controller="Auth" asp-action="Logout" method="post">
                     <button type="submit" class="list-group-item bg-transparent border-0 text-start w-100">
-                        <i class="fas fa-sign-out-alt me-3"></i> Log Out
+                        <i class="fas fa-sign-out-alt me-2  text-danger"></i>Log Out
                     </button>
                 </form>
             </div>
         </div>
-      @*   <div class="ms-auto d-flex align-items-center text-white">
-        <i class="fas fa-bell me-3" style="cursor:pointer;"></i>
-
-        <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center text-white p-0" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2 d-none d-md-inline">Welcome, <strong>Admin</strong></span>
-
-                <div class="admin-profile-img-container">
-                    <img src="~/images/admin-profile.jpg"
-                         alt="Admin"
-                         class="rounded-circle border border-2 border-white shadow-sm"
-                         asp-append-version="true">
-                </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="adminDropdown">
-                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <form asp-area="Identity" asp-page="/Account/Logout" method="post">
-                        <button type="submit" class="dropdown-item text-danger">
-                            <i class="fas fa-sign-out-alt me-2"></i> Log Out
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
- *@
+ 
         <div  id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-red border-bottom shadow-sm">
                 <div class="container-fluid">
