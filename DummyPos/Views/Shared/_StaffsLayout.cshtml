@@ -18,12 +18,7 @@
             <div class="sidebar-heading text-white py-4 px-3">
                 <i class="fas fa-pizza-slice me-2 text-warning"></i> <strong>STAFFS Panel</strong>
             </div>
-           @*  <div class="admin-profile-img-container">
-                <img src="~/images/admin-profile.jpg"
-                     alt="Staff"
-                     class="rounded-circle border border-2 border-white shadow-sm"
-                     asp-append-version="true">
-            </div> *@
+
             <div class="list-group list-group-flush">
                  <a asp-controller="Staffs" asp-action="Order" class="list-group-item @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
                     <i class="fas fa-tachometer-alt me-3 text-warning"></i>Create Orders
@@ -48,41 +43,13 @@
                 </form>
             </div>
         </div>
-        @*   <div class="ms-auto d-flex align-items-center text-white">
-        <i class="fas fa-bell me-3" style="cursor:pointer;"></i>
-
-        <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center text-white p-0" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2 d-none d-md-inline">Welcome, <strong>Admin</strong></span>
-
-                <div class="admin-profile-img-container">
-                    <img src="~/images/admin-profile.jpg"
-                         alt="Admin"
-                         class="rounded-circle border border-2 border-white shadow-sm"
-                         asp-append-version="true">
-                </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="adminDropdown">
-                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <form asp-area="Identity" asp-page="/Account/Logout" method="post">
-                        <button type="submit" class="dropdown-item text-danger">
-                            <i class="fas fa-sign-out-alt me-2"></i> Log Out
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
- *@
+       
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-red border-bottom shadow-sm">
                 <div class="ms-auto d-flex align-items-center" style="gap: 15px;">
     
                     @{
-                        // Safely grab the staff's name and first letter for the avatar
+                        
                         string userName = User.Identity?.Name ?? "Staff";
                         string initial = !string.IsNullOrEmpty(userName) ? userName.Substring(0, 1).ToUpper() : "S";
                     }

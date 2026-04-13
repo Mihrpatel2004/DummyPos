@@ -19,7 +19,7 @@
            
             <div class="list-group list-group-flush">
                 @{
-                    // Get the current Controller and Action to accurately highlight the exact button
+                    
                     var c = ViewContext.RouteData.Values["Controller"]?.ToString();
                     var a = ViewContext.RouteData.Values["Action"]?.ToString();
                 }
@@ -114,7 +114,7 @@
 
                         <form asp-controller="Auth" asp-action="Logout" method="post" class="m-0">
                             <button type="submit" class="btn btn-light text-danger fw-bold shadow-sm" style="height: 40px; display: flex; align-items: center; border-radius: 8px;">
-                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                <i class="fas fa-sign-out-alt me-2  "></i> Logout
                             </button>
                         </form>
 
